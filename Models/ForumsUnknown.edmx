@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ForumsUnknownModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="FORUM_POSTS">
+          <Key>
+            <PropertyRef Name="PostID" />
+          </Key>
+          <Property Name="PostID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Content" Type="text" Nullable="false" />
+          <Property Name="CreatedAt" Type="datetime" />
+          <Property Name="AuthorID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FORUM_USERS">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="EmailAddress" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="UserPassword" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__FORUM_POS__Autho__4E88ABD4">
+          <End Role="FORUM_USERS" Type="Self.FORUM_USERS" Multiplicity="1" />
+          <End Role="FORUM_POSTS" Type="Self.FORUM_POSTS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FORUM_USERS">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="FORUM_POSTS">
+              <PropertyRef Name="AuthorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ForumsUnknownModelStoreContainer">
+          <EntitySet Name="FORUM_POSTS" EntityType="Self.FORUM_POSTS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FORUM_USERS" EntityType="Self.FORUM_USERS" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__FORUM_POS__Autho__4E88ABD4" Association="Self.FK__FORUM_POS__Autho__4E88ABD4">
+            <End Role="FORUM_USERS" EntitySet="FORUM_USERS" />
+            <End Role="FORUM_POSTS" EntitySet="FORUM_POSTS" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ForumsUnknownModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="FORUM_POSTS">
+          <Key>
+            <PropertyRef Name="PostID" />
+          </Key>
+          <Property Name="PostID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreatedAt" Type="DateTime" Precision="3" />
+          <Property Name="AuthorID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="FORUM_USERS" Relationship="Self.FK__FORUM_POS__Autho__4E88ABD4" FromRole="FORUM_POSTS" ToRole="FORUM_USERS" />
+        </EntityType>
+        <EntityType Name="FORUM_USERS">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EmailAddress" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UserPassword" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="FORUM_POSTS" Relationship="Self.FK__FORUM_POS__Autho__4E88ABD4" FromRole="FORUM_USERS" ToRole="FORUM_POSTS" />
+        </EntityType>
+        <Association Name="FK__FORUM_POS__Autho__4E88ABD4">
+          <End Role="FORUM_USERS" Type="Self.FORUM_USERS" Multiplicity="1" />
+          <End Role="FORUM_POSTS" Type="Self.FORUM_POSTS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FORUM_USERS">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="FORUM_POSTS">
+              <PropertyRef Name="AuthorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ForumsUnknown" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="FORUM_POSTS" EntityType="Self.FORUM_POSTS" />
+          <EntitySet Name="FORUM_USERS" EntityType="Self.FORUM_USERS" />
+          <AssociationSet Name="FK__FORUM_POS__Autho__4E88ABD4" Association="Self.FK__FORUM_POS__Autho__4E88ABD4">
+            <End Role="FORUM_USERS" EntitySet="FORUM_USERS" />
+            <End Role="FORUM_POSTS" EntitySet="FORUM_POSTS" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ForumsUnknownModelStoreContainer" CdmEntityContainer="ForumsUnknown">
+          <EntitySetMapping Name="FORUM_POSTS">
+            <EntityTypeMapping TypeName="ForumsUnknownModel.FORUM_POSTS">
+              <MappingFragment StoreEntitySet="FORUM_POSTS">
+                <ScalarProperty Name="PostID" ColumnName="PostID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="AuthorID" ColumnName="AuthorID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FORUM_USERS">
+            <EntityTypeMapping TypeName="ForumsUnknownModel.FORUM_USERS">
+              <MappingFragment StoreEntitySet="FORUM_USERS">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="UserPassword" ColumnName="UserPassword" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
