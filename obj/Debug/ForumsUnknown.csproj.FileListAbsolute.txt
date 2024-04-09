@@ -51,6 +51,8 @@ D:\Kurt\Programming\elnet\ForumsUnknown\bin\roslyn\vbc.rsp
 D:\Kurt\Programming\elnet\ForumsUnknown\bin\roslyn\VBCSCompiler.exe
 D:\Kurt\Programming\elnet\ForumsUnknown\bin\roslyn\VBCSCompiler.exe.config
 D:\Kurt\Programming\elnet\ForumsUnknown\bin\Antlr3.Runtime.dll
+D:\Kurt\Programming\elnet\ForumsUnknown\bin\EntityFramework.dll
+D:\Kurt\Programming\elnet\ForumsUnknown\bin\EntityFramework.SqlServer.dll
 D:\Kurt\Programming\elnet\ForumsUnknown\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 D:\Kurt\Programming\elnet\ForumsUnknown\bin\Microsoft.Web.Infrastructure.dll
 D:\Kurt\Programming\elnet\ForumsUnknown\bin\Newtonsoft.Json.dll
@@ -62,6 +64,8 @@ D:\Kurt\Programming\elnet\ForumsUnknown\bin\System.Web.WebPages.Deployment.dll
 D:\Kurt\Programming\elnet\ForumsUnknown\bin\System.Web.WebPages.dll
 D:\Kurt\Programming\elnet\ForumsUnknown\bin\System.Web.WebPages.Razor.dll
 D:\Kurt\Programming\elnet\ForumsUnknown\bin\WebGrease.dll
+D:\Kurt\Programming\elnet\ForumsUnknown\bin\EntityFramework.xml
+D:\Kurt\Programming\elnet\ForumsUnknown\bin\EntityFramework.SqlServer.xml
 D:\Kurt\Programming\elnet\ForumsUnknown\bin\System.Web.Helpers.xml
 D:\Kurt\Programming\elnet\ForumsUnknown\bin\System.Web.Mvc.xml
 D:\Kurt\Programming\elnet\ForumsUnknown\bin\System.Web.Optimization.xml
@@ -77,7 +81,3 @@ D:\Kurt\Programming\elnet\ForumsUnknown\obj\Debug\ForumsUnknown.csproj.CoreCompi
 D:\Kurt\Programming\elnet\ForumsUnknown\obj\Debug\ForumsUnknown.csproj.CopyComplete
 D:\Kurt\Programming\elnet\ForumsUnknown\obj\Debug\ForumsUnknown.dll
 D:\Kurt\Programming\elnet\ForumsUnknown\obj\Debug\ForumsUnknown.pdb
-D:\Kurt\Programming\elnet\ForumsUnknown\bin\EntityFramework.dll
-D:\Kurt\Programming\elnet\ForumsUnknown\bin\EntityFramework.SqlServer.dll
-D:\Kurt\Programming\elnet\ForumsUnknown\bin\EntityFramework.xml
-D:\Kurt\Programming\elnet\ForumsUnknown\bin\EntityFramework.SqlServer.xml

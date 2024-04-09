@@ -1,0 +1,36 @@
+﻿@model List<ForumsUnknown.Models.FORUM_USERS>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    @Html.ActionLink("GO BACK", "AdminPage", "Admin", new { @class = "btn btn-secondary" })
+    @Html.ActionLink("POSTS", "Posts", "Admin", new { @class = "btn btn-outline-light" })
+    <div id="UsersDisplay">
+        <table class="table text-white">
+            <thead>
+                <tr>
+                    <th scope="col">User ID</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Email Address</th>
+                    <th scope="col">Password</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+                    <tr>
+                        <th scope="row">@user.UserID</th>
+                        <td>@user.UserName</td>
+                        <td>@user.EmailAddress</td>
+                        <td>@user.UserPassword</td>
+                        <td>
+                            <button class="btn btn-primary">Edit</button>
+                            <button class="btn btn-danger">Delete</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

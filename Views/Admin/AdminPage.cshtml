@@ -1,0 +1,13 @@
+﻿@model List<ForumsUnknown.Models.FORUM_USERS> 
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Admin Page";
+}
+
+<div class="container">
+    <h2>@ViewBag.Title</h2>
+
+    @Html.ActionLink("USERS", "Users", "Admin", new { @class = "btn btn-outline-light" })
+    @Html.ActionLink("POSTS", "Posts", "Admin", new { @class = "btn btn-outline-light" })
+</div>
+

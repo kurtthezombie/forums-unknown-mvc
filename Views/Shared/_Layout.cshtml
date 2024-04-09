@@ -29,27 +29,31 @@
                     {
                         <li>@Html.ActionLink("ABOUT", "About", "Home", new { area = "" }, new { @class = "nav-link text-light brawler-regular" })</li>
                         <li>@Html.ActionLink("CONTACT", "Contact", "Home", new { area = "" }, new { @class = "nav-link text-light brawler-regular" })</li>
-                        <li>@Html.ActionLink("REGISTER", "Register", "Home", new { area = "" }, new { @class = "nav-link btn btn-dark rounded-0 mx-3 brawler-regular text-light" })</li>
-                        <li>@Html.ActionLink("LOGIN", "Login", "Home", new { area = "" }, new { @class = "nav-link btn btn-light rounded-0 text-dark brawler-regular" })</li>
+                        <li>@Html.ActionLink("REGISTER", "Register", "User", new { area = "" }, new { @class = "nav-link btn btn-dark rounded-0 mx-3 brawler-regular text-light" })</li>
+                        <li>@Html.ActionLink("LOGIN", "Login", "User", new { area = "" }, new { @class = "nav-link btn btn-light rounded-0 text-dark brawler-regular" })</li>
                     }
                     else
                     {
-                        <li><a href="@Url.Action("CreatePost", "Home")" class="btn btn-outline-light mx-2">+CREATE</a></li>
+                        string username = Session["Username"].ToString();
+                        if (username == "admin")
+                        {
+                            <li><a href="@Url.Action("AdminPage", "Admin")" class="btn btn-outline-light mx-2">Admin</a></li>
+                        }
+
+                        <li><a href="@Url.Action("CreatePost", "Post")" class="btn btn-outline-light mx-2">+CREATE</a></li>
                         <li>
                             <div class="dropdown">
                                 <button class="btn dropdown-toggle text-light" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Welcome, <span class="text-danger">@Session["Username"]</span>
+                                    Welcome, <span class="text-danger">@Session["Username"]</span>
                                 </button>
                                 <div class="dropdown-menu bg-transparent" aria-labelledby="dropdownMenuButton">
                                     <a class="dropdown-item text-primary" href="#">Profile</a>
-                                    <a class="dropdown-item text-danger" href="@Url.Action("Logout","Home")">Logout</a>
+                                    <a class="dropdown-item text-danger" href="@Url.Action("Logout","User")">Logout</a>
                                 </div>
                             </div>
-                            <!--<a href="#" class="btn btn-dark text-light mx-2 brawler-regular">
-                                Welcome, @Session["Username"]
-                            </a>
-                            <a href="@Url.Action("Logout","Home")" class="btn btn-sm btn-outline-danger">LOGOUT</a>-->
+
                         </li>
+
                     }
 
                 </ul>
