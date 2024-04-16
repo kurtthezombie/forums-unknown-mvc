@@ -1,38 +1,61 @@
-﻿@model List<ForumsUnknown.Models.FORUM_POSTS>
+﻿@model IEnumerable<ForumsUnknown.Models.FORUM_POSTS>
+
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Posts";
 }
-<div class="container">
-    @Html.ActionLink("GO BACK", "AdminPage", "Admin", new { @class = "btn btn-secondary" })
-    @Html.ActionLink("USERS", "Users", "Admin", new { @class = "btn btn-outline-light" })
-    <div id="UsersDisplay">
-        <table class="table text-white">
-            <thead>
-                <tr>
-                    <th scope="col">Post ID</th>
-                    <th scope="col">Title</th>
-                    <th scope="col">Content</th>
-                    <th scope="col">Author ID</th>
-                    <th scope="col">Created At</th>
-                    <th scope="col">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var post in Model)
-                {
-                    <tr>
-                        <th scope="row">@post.PostID</th>
-                        <td>@post.Title</td>
-                        <td>@post.Content</td>
-                        <td>@post.AuthorID</td>
-                        <td>@post.CreatedAt</td>
-                        <td>
-                            <button class="btn btn-primary">Edit</button>
-                            <button class="btn btn-danger">Delete</button>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
+
+<h2>Posts</h2>
+@Html.ActionLink("GO BACK", "AdminPage", "Admin", new { @class = "btn btn-secondary" })
+@Html.ActionLink("USERS", "Users", "Admin", new { @class = "btn btn-outline-light" })
+
+<div class="mt-2">
+    <a href="@Url.Action("CreatePost","Post")" class="btn btn-outline-primary">+Create New</a>
 </div>
+
+<table class="table text-white">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.PostID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Content)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedAt)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AuthorID)
+        </th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.PostID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Content)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedAt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AuthorID)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }, new { @class = "btn btn-primary" }) |
+                @Html.ActionLink("Details", "DetailsPost", new {  id=item.PostID  }, new { @class = "btn btn-secondary" }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+    }
+
+</table>

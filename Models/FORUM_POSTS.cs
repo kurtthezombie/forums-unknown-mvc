@@ -31,6 +31,7 @@ namespace ForumsUnknown.Models
         public Nullable<System.DateTime> CreatedAt { get; set; }
 
         [Required]
+        [DisplayName("Author ID")]
         public int AuthorID { get; set; }
     
 
