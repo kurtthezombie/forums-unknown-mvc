@@ -47,7 +47,7 @@
                                     Welcome, <span class="text-danger">@Session["Username"]</span>
                                 </button>
                                 <div class="dropdown-menu bg-transparent" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item text-primary" href="#">Profile</a>
+                                    <a class="dropdown-item text-primary" href="@Url.Action("UserProfile","User", new { id = Session["UserId"] })">Profile</a>
                                     <a class="dropdown-item text-danger" href="@Url.Action("Logout","User")">Logout</a>
                                 </div>
                             </div>

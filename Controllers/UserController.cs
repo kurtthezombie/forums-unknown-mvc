@@ -53,7 +53,7 @@ namespace ForumsUnknown.Controllers
         public ActionResult Logout()
         {
             Session.Clear();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "User");
         }
 
         private bool UserExists(string username)
@@ -115,6 +115,18 @@ namespace ForumsUnknown.Controllers
                     return View(user);
                 }
             }
+        }
+
+        public ActionResult UserProfile(int id)
+        {
+            FORUM_USERS user = db.FORUM_USERS.Find(id);
+
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(user);
         }
     }
 }
