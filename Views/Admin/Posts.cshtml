@@ -51,9 +51,8 @@
                 @Html.DisplayFor(modelItem => item.AuthorID)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }, new { @class = "btn btn-primary" }) |
                 @Html.ActionLink("Details", "DetailsPost", new {  id=item.PostID  }, new { @class = "btn btn-secondary" }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ }, new { @class = "btn btn-danger" })
+                @Html.ActionLink("Delete", "DeletePost", new {  id=item.PostID }, htmlAttributes: new { @class = "btn btn-danger" })
             </td>
         </tr>
     }

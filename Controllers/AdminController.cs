@@ -194,6 +194,13 @@ namespace ForumsUnknown.Controllers
             return View(post);
         }
 
+        public ActionResult DeletePost(int id)
+        {
+            var postController = new PostController();
+            postController.Delete(id);
+
+            return RedirectToAction("Posts");
+        }
         #endregion
 
     }

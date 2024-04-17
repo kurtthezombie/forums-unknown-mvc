@@ -37,14 +37,25 @@ namespace ForumsUnknown.Controllers
                 //notification messages
                 ViewBag.Notification = "Successfully posted.";
                 ViewBag.NotificationColor = "text-success";
+                //clear textfields
+                ModelState.Clear();
 
-                return View();
+                return View(new FORUM_POSTS());
             } 
             else
             {
                 return View(post);
             }
         }
+
+        public void Delete(int? id)
+        {
+            var data = db.FORUM_POSTS.Find(id);
+
+            db.FORUM_POSTS.Remove(data);
+            db.SaveChanges();
+        }
+
 
     }
 }
