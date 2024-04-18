@@ -106,9 +106,13 @@ namespace ForumsUnknown.Controllers
                 {
                     db.FORUM_USERS.Add(user);
                     db.SaveChanges();
+
                     ViewBag.Notification = "Successfully registered.";
                     ViewBag.NotificationColor = "text-success";
-                    return RedirectToAction("Login", "Home");
+                    //clear textfields
+                    ModelState.Clear();
+
+                    return View(new FORUM_USERS());
                 }
                 else
                 {
@@ -117,7 +121,43 @@ namespace ForumsUnknown.Controllers
             }
         }
 
-        public ActionResult UserProfile(int id)
+        public ActionResult UserProfile(int? id)
+        {
+            if (Session["Username"] != null )
+            {
+                FORUM_USERS user = db.FORUM_USERS.Find(id);
+
+                if (user == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(user);
+            }
+            else
+            {
+                return RedirectToAction("Login","User");
+            }
+
+        }
+
+        public ActionResult DeleteUser (int id)
+        {
+            Session.Clear();
+            Delete(id);
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        public void Delete(int? id)
+        {
+            var data = db.FORUM_USERS.Find(id);
+
+            db.FORUM_USERS.Remove(data);
+            db.SaveChanges();
+        }
+
+        [HttpGet]
+        public ActionResult EditUser(int id)
         {
             FORUM_USERS user = db.FORUM_USERS.Find(id);
 
@@ -127,6 +167,47 @@ namespace ForumsUnknown.Controllers
             }
 
             return View(user);
+        }
+
+        [HttpPost]
+        public ActionResult EditUser(FORUM_USERS user)
+        {
+            if (ModelState.IsValid)
+            {
+                if (IsUsernameUnique(user.UserID, user.UserName))
+                {
+                    //get the row
+                    var data = db.FORUM_USERS.Where(x => x.UserID == user.UserID).FirstOrDefault();
+                    //edit data
+                    if (data != null)
+                    {
+                        data.UserName = user.UserName;
+                        data.EmailAddress = user.EmailAddress;
+                        data.UserPassword = user.UserPassword;
+                        data.ConfirmPassword = user.ConfirmPassword;
+                    }
+
+                    db.SaveChanges();
+
+                    return RedirectToAction("UserProfile", new { id = Session["UserId"] });
+                }
+                else
+                {
+                    // If the new username already exists, add a model error and return the Edit view
+                    ModelState.AddModelError("UserName", "Username already exists.");
+                    return View(user);
+                }
+
+            }
+            return View(user);
+        }
+
+        private bool IsUsernameUnique(int userId, string newUserName)
+        {
+            var existingUser = db.FORUM_USERS.FirstOrDefault(u => u.UserID == userId);
+
+            return existingUser == null || existingUser.UserName == newUserName ||
+                !db.FORUM_USERS.Any(u => u.UserID != userId && u.UserName == newUserName);
         }
     }
 }

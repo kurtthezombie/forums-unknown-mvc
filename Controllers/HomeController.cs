@@ -18,20 +18,6 @@ namespace ForumsUnknown.Controllers
 
         public ActionResult Index()
         {
-            //var posts = db.FORUM_POSTS.ToList();
-            /*if { Session["Username"] != null}
-            {
-                using (var db = new FuDBContext())
-                {
-                    var postsWithAuthors = db.FORUM_POSTS
-                        .Include(p => p.FORUM_USERS)
-                        .FirstOrDefault(p => p.AuthorID == Session["UserId"])
-                        .ToList();
-
-                    return View(postsWithAuthors);
-                }
-            }
-            */
             var posts = (from p in db.FORUM_POSTS
                          join u in db.FORUM_USERS on p.AuthorID equals u.UserID
                          orderby p.CreatedAt descending
@@ -45,6 +31,11 @@ namespace ForumsUnknown.Controllers
                          }).ToList();
 
             return View(posts);
+        }
+
+        public ActionResult RedirectToIndex()
+        {
+            return RedirectToAction("Index");
         }
 
         public ActionResult About()
