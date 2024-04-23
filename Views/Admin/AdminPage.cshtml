@@ -1,11 +1,19 @@
-﻿@model List<ForumsUnknown.Models.FORUM_USERS> 
+﻿@model ForumsUnknown.Models.TableCountsViewModel
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Admin Page";
 }
 
 <div class="container">
-    <h2>@ViewBag.Title</h2>
+    <h2 class="display-2">@ViewBag.Title</h2>
+    <div class="d-flex justify-content-start">
+        <div class="bg-dark p-3">
+            <h4 class="display-4">Users: <span class="text-danger">@Model.UserCount</span></h4>
+        </div>
+        <div class="bg-dark mx-3 p-3">
+            <h4 class="display-4">Posts: <span class="text-danger">@Model.PostCount</span></h4>
+        </div>
+    </div><br />
 
     @Html.ActionLink("USERS", "Users", "Admin", new { @class = "btn btn-outline-light" })
     @Html.ActionLink("POSTS", "Posts", "Admin", new { @class = "btn btn-outline-light" })

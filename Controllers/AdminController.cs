@@ -19,7 +19,19 @@ namespace ForumsUnknown.Controllers
             if (Session["Username"] != null)
             {
                 string username = Session["Username"].ToString();
-                return username != "admin" ? RedirectToAction("Index", "Home") : (ActionResult)View();
+                if (username == "admin")
+                {
+                    TableCountsViewModel tableCounts = new TableCountsViewModel();
+
+                    tableCounts.UserCount = db.FORUM_USERS.Count();
+                    tableCounts.PostCount = db.FORUM_POSTS.Count();
+
+                    return View(tableCounts);
+                } 
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+                }
             }
             else
             {

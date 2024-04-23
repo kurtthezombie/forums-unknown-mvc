@@ -4,10 +4,10 @@
     ViewBag.Title = "DetailsUser";
 }
 
-<h2>DetailsUser</h2>
+<h4>User Details</h4>
 
 <div>
-    <h4>FORUM_USERS</h4>
+    <h2 class="display-2">@Model.UserName</h2>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -37,6 +37,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "EditUser", new {  id = Model.UserID  }) |
-    @Html.ActionLink("Back to List", "Users")
+    @Html.ActionLink("✏️", "EditUser", new {  id = Model.UserID  }, htmlAttributes: new { @class = "btn btn-outline-light" }) |
+    @Html.ActionLink("⬅️", "Users", null, htmlAttributes: new { @class = "btn btn-outline-light" })
 </p>

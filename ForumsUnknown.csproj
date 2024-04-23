@@ -158,6 +158,7 @@
     <Compile Include="Models\FORUM_USERS.cs">
       <DependentUpon>ForumsUnknown.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TableCountsViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
