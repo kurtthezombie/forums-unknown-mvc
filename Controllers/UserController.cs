@@ -40,14 +40,30 @@ namespace ForumsUnknown.Controllers
             if (userExists)
             {
                 FORUM_USERS UserInfo = GetUserByUsername(user.UserName);
+                
+                if (UserNamePassMatch(user.UserName, user.UserPassword))
+                {
+                    Session["Username"] = UserInfo.UserName;
+                    Session["UserId"] = UserInfo.UserID;
+                    ViewBag.Notification = "Successfully logged in.";
+                    ViewBag.NotificationColor = "text-success";
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    ViewBag.Notification = "Incorrect username or password.";
+                    ViewBag.NotificationColor = "text-danger";
+                    return View();
+                }
 
-                Session["Username"] = UserInfo.UserName;
-                Session["UserId"] = UserInfo.UserID;
-                ViewBag.Notification = "Successfully logged in.";
-                ViewBag.NotificationColor = "text-success";
-                return RedirectToAction("Index", "Home");
             }
-            return View();
+            else
+            {
+                ViewBag.Notification = "Account does not exist.";
+                ViewBag.NotificationColor = "text-danger";
+                return View();
+
+            }
         }
 
         public ActionResult Logout()
@@ -65,6 +81,26 @@ namespace ForumsUnknown.Controllers
                 return userExists;
             }
         }
+
+        private bool UserNamePassMatch(string username, string password)
+        {
+            using (var db = new FuDBContext())
+            {
+                FORUM_USERS user = db.FORUM_USERS.FirstOrDefault(u => u.UserName == username);
+                
+                //if both match return true, else return false
+                return user.UserName.Equals(username) && user.UserPassword.Equals(password);
+            }
+        }
+
+        //private bool passwordMatch(string username, string password)
+        //{
+        //    using (var db = new FuDBContext())
+        //    {
+        //        //get row matching password and username 
+        //        //check if password written matches password in database
+        //    }
+        //}
 
         private FORUM_USERS GetUserByUsername(string username)
         {
@@ -97,7 +133,7 @@ namespace ForumsUnknown.Controllers
             if (userExists)
             {
                 ViewBag.Notification = "Username already exists.";
-                ViewBag.NotificaitonColor = "text-danger";
+                ViewBag.NotificationColor = "text-danger";
                 return View();
             }
             else
