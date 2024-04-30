@@ -56,6 +56,25 @@ namespace ForumsUnknown.Controllers
             db.SaveChanges();
         }
 
+        public ActionResult Post(int id)
+        {
+            //FORUM_POSTS post = db.FORUM_POSTS.Find(id);
+            int postId = id;
+
+            var post = (from p in db.FORUM_POSTS
+                        join u in db.FORUM_USERS on p.AuthorID equals u.UserID
+                        where p.PostID == postId // Filter by post ID
+                        select new ForumPostViewModel
+                        {
+                            PostID = p.PostID,
+                            Title = p.Title,
+                            Content = p.Content,
+                            CreatedAt = (DateTime)p.CreatedAt,
+                            AuthorName = u.UserName
+                        }).FirstOrDefault();
+
+            return View(post);
+        }
 
     }
 }

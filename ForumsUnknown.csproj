@@ -241,6 +241,7 @@
     <Content Include="Views\Admin\DetailsPost.cshtml" />
     <Content Include="Views\User\UserProfile.cshtml" />
     <Content Include="Views\User\EditUser.cshtml" />
+    <Content Include="Views\Post\Post.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
