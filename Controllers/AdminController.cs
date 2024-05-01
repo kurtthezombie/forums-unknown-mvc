@@ -171,7 +171,31 @@ namespace ForumsUnknown.Controllers
         #endregion
 
         #region Posts
+        [HttpGet]
+        public ActionResult CreatePost()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreatePost(FORUM_POSTS post) {
+            if (ModelState.IsValid)
+            {
+                post.CreatedAt = DateTime.Now;
+                db.FORUM_POSTS.Add(post);
+                db.SaveChanges();
 
+                ViewBag.Notification = "Successfully posted.";
+                ViewBag.NotificationColor = "text-success";
+
+                ModelState.Clear();
+                return View(new FORUM_POSTS());
+            }
+            else
+            {
+                return View(post);
+            }
+        }
         public ActionResult Posts()
         {
             

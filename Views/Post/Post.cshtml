@@ -3,58 +3,19 @@
 @{
     ViewBag.Title = "Post";
 }
-
-<h2>Post</h2>
-
 <div>
-    <hr />
     <div class="container">
         <p>
             @Html.ActionLink("Back", "Index", "Home", null, htmlAttributes: new { @class = "btn btn-outline-light" })
         </p>
-        <div class="card bg-transparent mt-5 text-light">
+        <div class="card bg-transparent mt-1 text-light">
             <h1 class="card-title display-2">@Model.Title</h1>
-            <h4 class="card-subtitle text-secondary">@Model.AuthorName</h4>
-            <h3 class="card-body">
-                @Model.Content
-            </h3>
+            <h5 class="card-subtitle text-secondary">by <span class="text-danger">@Model.AuthorName</span></h5>
+            <hr class="w-25"/>
+            <h3 class="card-body">@Model.Content</h3>
             <p class="text-secondary">@Model.CreatedAt</p>
 
         </div>
     </div>
-    @*<dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.Title)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Title)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Content)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Content)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.CreatedAt)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.CreatedAt)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.AuthorID)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.AuthorID)
-            </dd>
-
-        </dl>*@
 </div>
 

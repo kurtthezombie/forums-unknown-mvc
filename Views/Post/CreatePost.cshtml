@@ -35,7 +35,6 @@
                 </div>
                 <br />
                 <div class="form-group">
-                    
                     @Html.HiddenFor(model => model.AuthorID, new { Value = Session["UserId"] })
                     <label class="@ViewBag.NotificationColor">@ViewBag.Notification</label>
                 </div>
