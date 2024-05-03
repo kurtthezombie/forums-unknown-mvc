@@ -3,14 +3,9 @@
 @{
     ViewBag.Title = "CreatePost";
 
-
 }
 
 <div class="container mt-5">
-    @if (Session["Username"].ToString() == "admin")
-    {
-        @Html.ActionLink("Back", "Posts", "Admin", null, htmlAttributes: new { @class = "btn-outline-light btn"});
-    }
     <div class="card col-lg-5 border-light mx-auto bg-transparent p-3">
         <div class="card-header display-6 text-light border-0">Create Post</div>
         <div class="card-body">

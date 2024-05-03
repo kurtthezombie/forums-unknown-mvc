@@ -36,3 +36,15 @@ body {
     font-weight: 700;
     font-style: normal;
 }
+
+
+/* My own css */
+
+.custom-highlight {
+    transition: box-shadow .2s;
+}
+
+.custom-highlight:hover {
+    cursor: pointer;
+    box-shadow: 0px 0px 11px rgb(255, 255, 255);
+}

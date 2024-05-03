@@ -6,16 +6,32 @@
 
 <div class="container">
     <h2 class="display-2">@ViewBag.Title</h2>
+    <br />
     <div class="d-flex justify-content-start">
-        <div class="bg-dark p-3">
-            <h4 class="display-4">Users: <span class="text-danger">@Model.UserCount</span></h4>
+        <div class="bg-dark p-3 user btn btn-dark">
+            <h4 class="display-4">Users: <span class="text-danger">@(@Model.UserCount - 1)</span></h4>
         </div>
-        <div class="bg-dark mx-3 p-3">
+        <div class="bg-dark mx-3 p-3 post btn btn-dark">
             <h4 class="display-4">Posts: <span class="text-danger">@Model.PostCount</span></h4>
         </div>
     </div><br />
 
-    @Html.ActionLink("USERS", "Users", "Admin", new { @class = "btn btn-outline-light" })
-    @Html.ActionLink("POSTS", "Posts", "Admin", new { @class = "btn btn-outline-light" })
+    @*@Html.ActionLink("USERS", "Users", "Admin", new { @class = "btn btn-outline-light" })
+    @Html.ActionLink("POSTS", "Posts", "Admin", new { @class = "btn btn-outline-light" })*@
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        //var cards = document.querySelectorAll(".card");
+        var user = document.querySelector(".user");
+        var post = document.querySelector(".post")
+
+        user.addEventListener("click", function () {
+            window.location.href = '/Admin/Users';
+        });
+
+        post.addEventListener("click", function () {
+            window.location.href = '/Admin/Posts';
+        });
+    });
+</script>
 

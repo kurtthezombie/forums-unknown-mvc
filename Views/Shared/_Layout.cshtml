@@ -34,11 +34,11 @@
                     }
                     else
                     {
-                        string username = Session["Username"].ToString();
+                        @*string username = Session["Username"].ToString();
                         if (username == "admin")
                         {
                             <li><a href="@Url.Action("AdminPage", "Admin")" class="btn btn-outline-light mx-2">Admin</a></li>
-                        }
+                        }*@
 
                         <li><a href="@Url.Action("CreatePost", "Post")" class="btn btn-outline-light mx-2">+CREATE</a></li>
                         <li>
@@ -47,6 +47,10 @@
                                     Welcome, <span class="text-danger">@Session["Username"]</span>
                                 </button>
                                 <div class="dropdown-menu bg-transparent" aria-labelledby="dropdownMenuButton">
+                                    @if (Session["Username"].ToString() == "admin")
+                                    {
+                                        <a class="dropdown-item text-muted" href="@Url.Action("AdminPage","Admin")">Admin</a>
+                                    }
                                     <a class="dropdown-item text-primary" href="@Url.Action("UserProfile","User", new { id = Session["UserId"] })">Profile</a>
                                     <a class="dropdown-item text-danger" href="@Url.Action("Logout","User")">Logout</a>
                                 </div>

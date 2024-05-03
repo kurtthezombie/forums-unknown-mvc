@@ -43,7 +43,7 @@
                 @Html.ActionLink("Details", "DetailsUser", new {  id=item.UserID  }, new { @class = "btn btn-secondary"}) |
                 @if (item.UserID != 1)
                 {
-                    @Html.ActionLink("Delete", "DeleteUser", new {  id=item.UserID  }, new { @class = "btn btn-danger"})
+                    @Html.ActionLink("Delete", "DeleteUser", new {  id=item.UserID  }, new { @class = "btn btn-danger", onclick = "return confirm('Delete this user?')"})
                 }
             </td>
         </tr>

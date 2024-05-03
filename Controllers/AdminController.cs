@@ -50,17 +50,30 @@ namespace ForumsUnknown.Controllers
         [HttpPost]
         public ActionResult CreateUser(FORUM_USERS user)
         {
-            if (ModelState.IsValid)
+            bool userExists = UserExists(user.UserName);
+            if (userExists)
             {
-                db.FORUM_USERS.Add(user);
-                db.SaveChanges();
-
+                ViewBag.Notification = "Username already exists.";
+                ViewBag.NotificationColor = "text-danger";
                 return View();
             }
             else
             {
-                return View(user);
+                if (ModelState.IsValid)
+                {
+                    db.FORUM_USERS.Add(user);
+                    db.SaveChanges();
+                    ModelState.Clear();
+                    ViewBag.Notification = "User created.";
+                    ViewBag.NotificationColor = "text-success";
+                    return View();
+                }
+                else
+                {
+                    return View(user);
+                }
             }
+                
         }
 
         public ActionResult DetailsUser(int? id)
@@ -132,6 +145,9 @@ namespace ForumsUnknown.Controllers
             }
             else
             {
+                //delete posts of user before deleting user
+                var posts = db.FORUM_POSTS.Where(x => x.AuthorID == id);
+                db.FORUM_POSTS.RemoveRange(posts);
                 db.FORUM_USERS.Remove(data);
                 db.SaveChanges();
             }
@@ -145,6 +161,15 @@ namespace ForumsUnknown.Controllers
 
             return existingUser == null || existingUser.UserName == newUserName || 
                 !db.FORUM_USERS.Any(u => u.UserID != userId && u.UserName == newUserName);
+        }
+        private bool UserExists(string username)
+        {
+            using (var db = new FuDBContext())
+            {
+                bool userExists = db.FORUM_USERS.Any(u => u.UserName == username);
+
+                return userExists;
+            }
         }
 
         public ActionResult Users()
