@@ -76,5 +76,10 @@ namespace ForumsUnknown.Controllers
             return View(post);
         }
 
+        public ActionResult MyPosts(int id)
+        {
+            var posts = db.FORUM_POSTS.Where(post => post.AuthorID == id).ToList();
+            return View(posts);
+        }
     }
 }

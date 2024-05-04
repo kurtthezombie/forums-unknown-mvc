@@ -35,11 +35,11 @@
                     else
                     {
                         @*string username = Session["Username"].ToString();
-                        if (username == "admin")
-                        {
-                            <li><a href="@Url.Action("AdminPage", "Admin")" class="btn btn-outline-light mx-2">Admin</a></li>
-                        }*@
-
+            if (username == "admin")
+            {
+                <li><a href="@Url.Action("AdminPage", "Admin")" class="btn btn-outline-light mx-2">Admin</a></li>
+            }*@
+                        <li>@Html.ActionLink("MY POSTS", "MyPosts", "Post", new { id = Session["UserId"] }, new { @class = "nav-link text-light brawler-regular",  })</li>
                         <li><a href="@Url.Action("CreatePost", "Post")" class="btn btn-outline-light mx-2">+CREATE</a></li>
                         <li>
                             <div class="dropdown">
