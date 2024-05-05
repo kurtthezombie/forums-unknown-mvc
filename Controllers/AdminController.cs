@@ -14,6 +14,7 @@ namespace ForumsUnknown.Controllers
         private FuDBContext db = new FuDBContext();
 
         // GET: Admin
+        [Route("Admin")]
         public ActionResult AdminPage()
         {
             if (Session["Username"] != null)

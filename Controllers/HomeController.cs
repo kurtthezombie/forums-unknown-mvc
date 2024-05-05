@@ -38,6 +38,7 @@ namespace ForumsUnknown.Controllers
             return RedirectToAction("Index");
         }
 
+        [Route("About")]
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
@@ -45,6 +46,7 @@ namespace ForumsUnknown.Controllers
             return View();
         }
 
+        [Route("Contact")]
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";

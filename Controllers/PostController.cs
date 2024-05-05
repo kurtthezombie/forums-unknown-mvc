@@ -10,7 +10,9 @@ namespace ForumsUnknown.Controllers
     public class PostController : Controller
     {
         FuDBContext db = new FuDBContext();
+
         [HttpGet]
+        [Route("CreatePost")]
         public ActionResult CreatePost()
         {
             if (Session["Username"] != null)
@@ -24,6 +26,7 @@ namespace ForumsUnknown.Controllers
             
         }
         [HttpPost]
+        [Route("CreatePost")]
         [ValidateAntiForgeryToken]
         public ActionResult CreatePost(FORUM_POSTS post)
         {
@@ -56,6 +59,7 @@ namespace ForumsUnknown.Controllers
             db.SaveChanges();
         }
 
+        [Route("Post/{id}")]
         public ActionResult Post(int id)
         {
             //FORUM_POSTS post = db.FORUM_POSTS.Find(id);
@@ -76,6 +80,7 @@ namespace ForumsUnknown.Controllers
             return View(post);
         }
 
+        [Route("{id}/MyPosts")]
         public ActionResult MyPosts(int id)
         {
             var posts = db.FORUM_POSTS.Where(post => post.AuthorID == id).ToList();

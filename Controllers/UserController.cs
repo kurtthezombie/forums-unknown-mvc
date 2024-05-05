@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace ForumsUnknown.Controllers
 {
@@ -18,6 +19,7 @@ namespace ForumsUnknown.Controllers
 
         // GET: User
         [HttpGet]
+        [Route("Login")]
         public ActionResult Login()
         {
             if (Session["Username"] != null)
@@ -33,6 +35,7 @@ namespace ForumsUnknown.Controllers
         }
 
         [HttpPost]
+        [Route("Login")]
         [ValidateAntiForgeryToken]
         public ActionResult Login(FORUM_USERS user)
         {
@@ -47,6 +50,8 @@ namespace ForumsUnknown.Controllers
                     Session["UserId"] = UserInfo.UserID;
                     ViewBag.Notification = "Successfully logged in.";
                     ViewBag.NotificationColor = "text-success";
+
+                    FormsAuthentication.SetAuthCookie(user.UserName, false);
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -69,6 +74,7 @@ namespace ForumsUnknown.Controllers
         public ActionResult Logout()
         {
             Session.Clear();
+            FormsAuthentication.SignOut();
             return RedirectToAction("Login", "User");
         }
 
@@ -111,6 +117,7 @@ namespace ForumsUnknown.Controllers
         }
 
         [HttpGet]
+        [Route("Register")]
         public ActionResult Register()
         {
             if (Session["Username"] != null)
@@ -125,6 +132,7 @@ namespace ForumsUnknown.Controllers
             }
         }
         [HttpPost]
+        [Route("Register")]
         [ValidateAntiForgeryToken]
         public ActionResult Register(FORUM_USERS user)
         {
@@ -157,6 +165,7 @@ namespace ForumsUnknown.Controllers
             }
         }
 
+        [Route("MyProfile")]
         public ActionResult UserProfile(int? id)
         {
             if (Session["Username"] != null )
