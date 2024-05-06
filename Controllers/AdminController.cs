@@ -9,6 +9,7 @@ using System.Web.Services.Description;
 
 namespace ForumsUnknown.Controllers
 {
+    [Authorize]
     public class AdminController : Controller
     {
         private FuDBContext db = new FuDBContext();

@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace ForumsUnknown.Controllers
 {
+    [Authorize]
     public class PostController : Controller
     {
         FuDBContext db = new FuDBContext();
