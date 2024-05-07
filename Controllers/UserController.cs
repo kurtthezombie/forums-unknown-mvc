@@ -28,7 +28,6 @@ namespace ForumsUnknown.Controllers
             }
             else
             {
-
                 return View();
             }
 
@@ -39,19 +38,21 @@ namespace ForumsUnknown.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(FORUM_USERS user)
         {
-            bool userExists = UserExists(user.UserName);
+            //trim username 
+            string username = user.UserName.Replace(" ","").Trim();
+            bool userExists = UserExists(username);
             if (userExists)
             {
-                FORUM_USERS UserInfo = GetUserByUsername(user.UserName);
+                FORUM_USERS UserInfo = GetUserByUsername(username);
                 
-                if (UserNamePassMatch(user.UserName, user.UserPassword))
+                if (UserNamePassMatch(username, user.UserPassword))
                 {
-                    Session["Username"] = UserInfo.UserName;
+                    Session["Username"] = username;
                     Session["UserId"] = UserInfo.UserID;
                     ViewBag.Notification = "Successfully logged in.";
                     ViewBag.NotificationColor = "text-success";
-
-                    FormsAuthentication.SetAuthCookie(user.UserName, false);
+                    //set authorization here
+                    FormsAuthentication.SetAuthCookie(username, false);
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -164,7 +165,7 @@ namespace ForumsUnknown.Controllers
                 }
             }
         }
-
+        [Authorize]
         [Route("MyProfile")]
         public ActionResult UserProfile(int? id)
         {
@@ -201,7 +202,9 @@ namespace ForumsUnknown.Controllers
             db.SaveChanges();
         }
 
+        [Authorize]
         [HttpGet]
+        [Route("EditProfile")]
         public ActionResult EditUser(int id)
         {
             FORUM_USERS user = db.FORUM_USERS.Find(id);
@@ -214,7 +217,9 @@ namespace ForumsUnknown.Controllers
             return View(user);
         }
 
+        [Authorize]
         [HttpPost]
+        [Route("EditProfile")]
         public ActionResult EditUser(FORUM_USERS user)
         {
             if (ModelState.IsValid)

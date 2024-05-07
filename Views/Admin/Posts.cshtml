@@ -5,8 +5,8 @@
 }
 
 <h2>Posts</h2>
-@Html.ActionLink("GO BACK", "AdminPage", "Admin", new { @class = "btn btn-secondary" })
-@Html.ActionLink("USERS", "Users", "Admin", new { @class = "btn btn-outline-light" })
+@Html.ActionLink("GO BACK", "AdminPage", "Admin", null,htmlAttributes: new { @class = "btn btn-secondary" })
+@Html.ActionLink("USERS", "Users", "Admin", null, htmlAttributes: new { @class = "btn btn-outline-light" })
 
 <div class="mt-2">
     <a href="@Url.Action("CreatePost","Admin")" class="btn btn-outline-primary">+Create New</a>

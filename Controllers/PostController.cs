@@ -81,7 +81,7 @@ namespace ForumsUnknown.Controllers
             return View(post);
         }
 
-        [Route("{id}/MyPosts")]
+        [Route("MyPosts")]
         public ActionResult MyPosts(int id)
         {
             var posts = db.FORUM_POSTS.Where(post => post.AuthorID == id).ToList();
