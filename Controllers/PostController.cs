@@ -52,6 +52,19 @@ namespace ForumsUnknown.Controllers
             }
         }
 
+        [HttpGet]
+        public ActionResult EditPost(int id)
+        {
+            FORUM_POSTS post = db.FORUM_POSTS.Find(id);
+
+            if (post == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(post);
+        }
+
         public void Delete(int? id)
         {
             var data = db.FORUM_POSTS.Find(id);
