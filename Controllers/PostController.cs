@@ -53,6 +53,7 @@ namespace ForumsUnknown.Controllers
         }
 
         [HttpGet]
+        [Route("EditPost")]
         public ActionResult EditPost(int id)
         {
             FORUM_POSTS post = db.FORUM_POSTS.Find(id);
@@ -63,6 +64,35 @@ namespace ForumsUnknown.Controllers
             }
 
             return View(post);
+        }
+
+        [HttpPost]
+        [Route("EditPost")]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditPost(FORUM_POSTS post)
+        {
+            if (ModelState.IsValid)
+            {
+                var data = db.FORUM_POSTS.Find(post.PostID);
+
+                if (data == null)
+                {
+                    return HttpNotFound();
+                }
+
+                data.Title = post.Title;
+                data.Content = post.Content;
+                //data.ModifiedAt = getdate.. 
+                db.SaveChanges();
+
+                return RedirectToAction("MyPosts", new { id = Session["UserId"] });
+
+            }
+            else
+            { 
+                return View(post);
+            }
+            
         }
 
         public void Delete(int? id)

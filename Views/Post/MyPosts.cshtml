@@ -4,8 +4,8 @@
     ViewBag.Title = "MyPosts";
 }
 
-<h2>My Posts</h2>
-
+<h2 class="display-2">My Posts</h2>
+<br />
 <p>
     @Html.ActionLink("Create New", "CreatePost", "Post", htmlAttributes: new { @class = "btn btn-outline-light" })
 </p>
@@ -20,7 +20,7 @@
                 <button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 </button>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Edit</a></li>
+                    <li>@Html.ActionLink("Edit","EditPost","Post", new { id = item.PostID }, htmlAttributes: new { @class = "dropdown-item" }) </li>
                     <li><a class="dropdown-item" href="#">Delete</a></li>
                 </ul>
             </div>
