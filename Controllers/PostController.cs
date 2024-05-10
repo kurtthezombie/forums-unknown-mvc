@@ -95,7 +95,13 @@ namespace ForumsUnknown.Controllers
             
         }
 
-        public void Delete(int? id)
+        public ActionResult DeletePost(int id)
+        {
+            Delete(id);
+            return RedirectToAction("MyPosts", new { id = Session["UserId"] });
+        }
+
+        public void Delete(int id)
         {
             var data = db.FORUM_POSTS.Find(id);
 
