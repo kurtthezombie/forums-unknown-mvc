@@ -4,6 +4,7 @@
     <EntitySetMapping Name="FORUM_POSTS">
       <EntityTypeMapping TypeName="ForumsUnknownModel.FORUM_POSTS">
         <MappingFragment StoreEntitySet="FORUM_POSTS">
+          <ScalarProperty Name="ModifiedAt" ColumnName="ModifiedAt" />
           <ScalarProperty Name="PostID" ColumnName="PostID" />
           <ScalarProperty Name="Title" ColumnName="Title" />
           <ScalarProperty Name="Content" ColumnName="Content" />
@@ -15,10 +16,24 @@
     <EntitySetMapping Name="FORUM_USERS">
       <EntityTypeMapping TypeName="ForumsUnknownModel.FORUM_USERS">
         <MappingFragment StoreEntitySet="FORUM_USERS">
+          <ScalarProperty Name="ModifiedAt" ColumnName="ModifiedAt" />
+          <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
           <ScalarProperty Name="UserID" ColumnName="UserID" />
           <ScalarProperty Name="UserName" ColumnName="UserName" />
           <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
           <ScalarProperty Name="UserPassword" ColumnName="UserPassword" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="COMMENTs">
+      <EntityTypeMapping TypeName="ForumsUnknownModel.COMMENT">
+        <MappingFragment StoreEntitySet="COMMENT">
+          <ScalarProperty Name="ModifiedAt" ColumnName="ModifiedAt" />
+          <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+          <ScalarProperty Name="PostID" ColumnName="PostID" />
+          <ScalarProperty Name="AuthorID" ColumnName="AuthorID" />
+          <ScalarProperty Name="Content" ColumnName="Content" />
+          <ScalarProperty Name="CommentID" ColumnName="CommentID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

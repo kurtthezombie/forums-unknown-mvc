@@ -5,11 +5,13 @@
       <PropertyRef Name="PostID" />
     </Key>
     <Property Name="PostID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Title" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="CreatedAt" Type="DateTime" Precision="3" />
     <Property Name="AuthorID" Type="Int32" Nullable="false" />
     <NavigationProperty Name="FORUM_USERS" Relationship="Self.FK__FORUM_POS__Autho__4E88ABD4" FromRole="FORUM_POSTS" ToRole="FORUM_USERS" />
+    <Property Name="ModifiedAt" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="COMMENTs" Relationship="ForumsUnknownModel.FK__COMMENT__PostID__66603565" FromRole="FORUM_POSTS" ToRole="COMMENT" />
   </EntityType>
   <EntityType Name="FORUM_USERS">
     <Key>
@@ -20,6 +22,9 @@
     <Property Name="EmailAddress" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="UserPassword" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="FORUM_POSTS" Relationship="Self.FK__FORUM_POS__Autho__4E88ABD4" FromRole="FORUM_USERS" ToRole="FORUM_POSTS" />
+    <Property Name="CreatedAt" Type="DateTime" Precision="3" />
+    <Property Name="ModifiedAt" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="COMMENTs" Relationship="ForumsUnknownModel.FK__COMMENT__AuthorI__656C112C" FromRole="FORUM_USERS" ToRole="COMMENT" />
   </EntityType>
   <Association Name="FK__FORUM_POS__Autho__4E88ABD4">
     <End Role="FORUM_USERS" Type="Self.FORUM_USERS" Multiplicity="1" />
@@ -40,5 +45,51 @@
       <End Role="FORUM_USERS" EntitySet="FORUM_USERS" />
       <End Role="FORUM_POSTS" EntitySet="FORUM_POSTS" />
     </AssociationSet>
+    <EntitySet Name="COMMENTs" EntityType="ForumsUnknownModel.COMMENT" />
+    <AssociationSet Name="FK__COMMENT__AuthorI__656C112C" Association="ForumsUnknownModel.FK__COMMENT__AuthorI__656C112C">
+      <End Role="FORUM_USERS" EntitySet="FORUM_USERS" />
+      <End Role="COMMENT" EntitySet="COMMENTs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__COMMENT__PostID__66603565" Association="ForumsUnknownModel.FK__COMMENT__PostID__66603565">
+      <End Role="FORUM_POSTS" EntitySet="FORUM_POSTS" />
+      <End Role="COMMENT" EntitySet="COMMENTs" />
+    </AssociationSet>
   </EntityContainer>
+  <EntityType Name="COMMENT">
+    <Key>
+      <PropertyRef Name="CommentID" />
+    </Key>
+    <Property Name="CommentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Content" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="AuthorID" Type="Int32" />
+    <Property Name="PostID" Type="Int32" />
+    <Property Name="CreatedAt" Type="DateTime" Precision="3" />
+    <Property Name="ModifiedAt" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="FORUM_USERS" Relationship="ForumsUnknownModel.FK__COMMENT__AuthorI__656C112C" FromRole="COMMENT" ToRole="FORUM_USERS" />
+    <NavigationProperty Name="FORUM_POSTS" Relationship="ForumsUnknownModel.FK__COMMENT__PostID__66603565" FromRole="COMMENT" ToRole="FORUM_POSTS" />
+  </EntityType>
+  <Association Name="FK__COMMENT__AuthorI__656C112C">
+    <End Type="ForumsUnknownModel.FORUM_USERS" Role="FORUM_USERS" Multiplicity="0..1" />
+    <End Type="ForumsUnknownModel.COMMENT" Role="COMMENT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FORUM_USERS">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="COMMENT">
+        <PropertyRef Name="AuthorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__COMMENT__PostID__66603565">
+    <End Type="ForumsUnknownModel.FORUM_POSTS" Role="FORUM_POSTS" Multiplicity="0..1" />
+    <End Type="ForumsUnknownModel.COMMENT" Role="COMMENT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FORUM_POSTS">
+        <PropertyRef Name="PostID" />
+      </Principal>
+      <Dependent Role="COMMENT">
+        <PropertyRef Name="PostID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

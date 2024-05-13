@@ -1,4 +1,4 @@
-﻿@model ForumsUnknown.Models.ForumPostViewModel
+﻿@model ForumsUnknown.Models.PostCommentsViewModel
 
 @{
     ViewBag.Title = "Post";
@@ -9,15 +9,48 @@
             @Html.ActionLink("Back", "Index", "Home", null, htmlAttributes: new { @class = "btn btn-outline-light" })
         </p>
         <div class="card bg-transparent mt-1 text-light">
-            <h1 class="card-title display-2">@Model.Title</h1>
-            <h5 class="card-subtitle text-secondary">by <span class="text-danger">@Model.AuthorName</span></h5>
-            <hr class="w-25"/>
-            <h3 class="card-body">@Model.Content</h3>
-            @{ 
-                string dateCreated = Model.CreatedAt?.ToString("MMMM dd yyyy");
+            <h1 class="card-title display-2">@Model.ForumPost.Title</h1>
+            <h5 class="card-subtitle text-secondary">by <span class="text-danger">@Model.ForumPost.AuthorName</span></h5>
+            <hr class="w-25" />
+            <h3 class="card-body">@Model.ForumPost.Content</h3>
+            @{
+                string dateCreated = Model.ForumPost.CreatedAt?.ToString("MMMM dd yyyy");
             }
-            <p class="text-secondary">@dateCreated</p> 
+            <p class="text-secondary">@dateCreated</p>
+            <div class="comment-section">
+                <p> @ViewBag.CommentCount Comments</p>
+                @using (Html.BeginForm("CreateComment", "Post", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="card bg-transparent col-md-6">
+                        <div class="card-body p-0">
+                            @Html.TextAreaFor(model => model.Comment.Content, htmlAttributes: new { @class = "form-control-sm bg-transparent text-white w-100 border-0 border-bottom rounded-0 pl-5 pb-0", placeholder = "Add a comment..." })
+                            @Html.ValidationMessageFor(model => model.Comment.Content, "", new { @class = "text-danger" })
+                            @*<textarea class="form-control-sm bg-transparent text-white w-100 border-0 border-bottom rounded-0 pl-5" style="padding-bottom: 0px;" placeholder="Add a comment..."></textarea>*@
+                            <br />
+                            <div class="form-group d-flex justify-content-end">
+                                @Html.HiddenFor(model => model.Comment.AuthorID, new { Value = Session["UserId"] })
+                                @Html.HiddenFor(model => model.Comment.PostID, new { Value = Model.ForumPost.PostID })
+                                <input type="reset" value="Cancel" class="btn btn-sm btn-outline-light m-0 mx-2" />
+                                <input type="submit" value="Comment" class="btn btn-sm btn-dark w-0" />
+                            </div>
+                        </div>
+                    </div>
+                }
+                <!--for each existing comment, sort by newest-->
+                @foreach (var comment in Model.Comments)
+                {
+                    <div class="comment-row">
+                        <h5>@comment.AuthorID</h5>
+                        <p>@comment.Content</p><br />
+                        <p>@comment.CreatedAt</p>
+                    </div>
+                }
+            </div>
+            
         </div>
+        
     </div>
 </div>
 

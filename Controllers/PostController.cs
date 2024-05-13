@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 
 namespace ForumsUnknown.Controllers
 {
@@ -109,12 +110,14 @@ namespace ForumsUnknown.Controllers
             db.SaveChanges();
         }
 
+        [HttpGet]
         [Route("Post/{id}")]
         public ActionResult Post(int id)
         {
             //FORUM_POSTS post = db.FORUM_POSTS.Find(id);
             int postId = id;
 
+            //query post
             var post = (from p in db.FORUM_POSTS
                         join u in db.FORUM_USERS on p.AuthorID equals u.UserID
                         where p.PostID == postId // Filter by post ID
@@ -126,8 +129,21 @@ namespace ForumsUnknown.Controllers
                             CreatedAt = (DateTime)p.CreatedAt,
                             AuthorName = u.UserName
                         }).FirstOrDefault();
+            //query comments
+            var comments = db.COMMENT.Where(c => c.PostID == id).ToList();
 
-            return View(post);
+            //create new PCVM instance
+            var PostCommentsVM = new PostCommentsViewModel();
+
+            //map post to forum post
+            PostCommentsVM.ForumPost = post;
+
+            PostCommentsVM.Comments = comments;
+
+            ViewBag.CommentCount = db.COMMENT.Where(c => c.PostID == id).Count();
+
+
+            return View(PostCommentsVM);
         }
 
         [Route("MyPosts")]
@@ -135,6 +151,27 @@ namespace ForumsUnknown.Controllers
         {
             var posts = db.FORUM_POSTS.Where(post => post.AuthorID == id).ToList();
             return View(posts);
+        }
+
+        [HttpPost]
+        [Route("CreateComment")]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateComment(COMMENT comment)
+        {
+            if (ModelState.IsValid)
+            {
+                //set data of each field
+                comment.CreatedAt = DateTime.Now;
+                comment.ModifiedAt = DateTime.Now;
+                db.COMMENT.Add(comment);
+                db.SaveChanges();
+                return RedirectToAction("Post","Post", new { id = comment.PostID });
+            }
+            else
+            {
+                return RedirectToAction("Post","Post", new { id = comment.PostID });
+            }
+            
         }
     }
 }

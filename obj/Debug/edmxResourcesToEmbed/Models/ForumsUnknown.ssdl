@@ -1,13 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="ForumsUnknownModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="COMMENT">
+    <Key>
+      <PropertyRef Name="CommentID" />
+    </Key>
+    <Property Name="CommentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Content" Type="text" Nullable="false" />
+    <Property Name="AuthorID" Type="int" />
+    <Property Name="PostID" Type="int" />
+    <Property Name="CreatedAt" Type="datetime" />
+    <Property Name="ModifiedAt" Type="datetime" />
+  </EntityType>
   <EntityType Name="FORUM_POSTS">
     <Key>
       <PropertyRef Name="PostID" />
     </Key>
     <Property Name="PostID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Title" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="Title" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="Content" Type="text" Nullable="false" />
     <Property Name="CreatedAt" Type="datetime" />
+    <Property Name="ModifiedAt" Type="datetime" />
     <Property Name="AuthorID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="FORUM_USERS">
@@ -18,8 +30,34 @@
     <Property Name="UserName" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="EmailAddress" Type="varchar" MaxLength="255" Nullable="false" />
     <Property Name="UserPassword" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="CreatedAt" Type="datetime" />
+    <Property Name="ModifiedAt" Type="datetime" />
   </EntityType>
-  <Association Name="FK__FORUM_POS__Autho__4E88ABD4">
+  <Association Name="FK__COMMENT__AuthorI__656C112C">
+    <End Role="FORUM_USERS" Type="Self.FORUM_USERS" Multiplicity="0..1" />
+    <End Role="COMMENT" Type="Self.COMMENT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FORUM_USERS">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="COMMENT">
+        <PropertyRef Name="AuthorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__COMMENT__PostID__66603565">
+    <End Role="FORUM_POSTS" Type="Self.FORUM_POSTS" Multiplicity="0..1" />
+    <End Role="COMMENT" Type="Self.COMMENT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FORUM_POSTS">
+        <PropertyRef Name="PostID" />
+      </Principal>
+      <Dependent Role="COMMENT">
+        <PropertyRef Name="PostID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__FORUM_POS__Autho__628FA481">
     <End Role="FORUM_USERS" Type="Self.FORUM_USERS" Multiplicity="1" />
     <End Role="FORUM_POSTS" Type="Self.FORUM_POSTS" Multiplicity="*" />
     <ReferentialConstraint>
@@ -32,9 +70,18 @@
     </ReferentialConstraint>
   </Association>
   <EntityContainer Name="ForumsUnknownModelStoreContainer">
+    <EntitySet Name="COMMENT" EntityType="Self.COMMENT" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="FORUM_POSTS" EntityType="Self.FORUM_POSTS" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="FORUM_USERS" EntityType="Self.FORUM_USERS" Schema="dbo" store:Type="Tables" />
-    <AssociationSet Name="FK__FORUM_POS__Autho__4E88ABD4" Association="Self.FK__FORUM_POS__Autho__4E88ABD4">
+    <AssociationSet Name="FK__COMMENT__AuthorI__656C112C" Association="Self.FK__COMMENT__AuthorI__656C112C">
+      <End Role="FORUM_USERS" EntitySet="FORUM_USERS" />
+      <End Role="COMMENT" EntitySet="COMMENT" />
+    </AssociationSet>
+    <AssociationSet Name="FK__COMMENT__PostID__66603565" Association="Self.FK__COMMENT__PostID__66603565">
+      <End Role="FORUM_POSTS" EntitySet="FORUM_POSTS" />
+      <End Role="COMMENT" EntitySet="COMMENT" />
+    </AssociationSet>
+    <AssociationSet Name="FK__FORUM_POS__Autho__628FA481" Association="Self.FK__FORUM_POS__Autho__628FA481">
       <End Role="FORUM_USERS" EntitySet="FORUM_USERS" />
       <End Role="FORUM_POSTS" EntitySet="FORUM_POSTS" />
     </AssociationSet>

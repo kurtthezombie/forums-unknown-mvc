@@ -15,33 +15,18 @@ namespace ForumsUnknown.Models
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-    public partial class FORUM_POSTS
+    public partial class COMMENT
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public FORUM_POSTS()
-        {
-            this.COMMENTs = new HashSet<COMMENT>();
-        }
-    
-        public int PostID { get; set; }
+        public int CommentID { get; set; }
 
         [Required]
-        [DisplayName("Title")]
-        public string Title { get; set; }
-        
-        [DisplayName("Content")]
         public string Content { get; set; }
-        
-        [DisplayName("Date Posted")]
+        public Nullable<int> AuthorID { get; set; }
+        public Nullable<int> PostID { get; set; }
         public Nullable<System.DateTime> CreatedAt { get; set; }
-
-        [Required]
-        public int AuthorID { get; set; }
-        
         public Nullable<System.DateTime> ModifiedAt { get; set; }
     
         public virtual FORUM_USERS FORUM_USERS { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<COMMENT> COMMENTs { get; set; }
+        public virtual FORUM_POSTS FORUM_POSTS { get; set; }
     }
 }

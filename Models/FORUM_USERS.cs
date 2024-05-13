@@ -21,19 +21,20 @@ namespace ForumsUnknown.Models
         public FORUM_USERS()
         {
             this.FORUM_POSTS = new HashSet<FORUM_POSTS>();
+            this.COMMENTs = new HashSet<COMMENT>();
         }
-
+    
         public int UserID { get; set; }
 
         [Required]
         [DisplayName("Username")]
         public string UserName { get; set; }
-
+        
         [Required]
         [DisplayName("Email Address")]
         [DataType(DataType.EmailAddress)]
         public string EmailAddress { get; set; }
-
+        
         [Required]
         [DisplayName("Password")]
         [DataType(DataType.Password)]
@@ -44,11 +45,14 @@ namespace ForumsUnknown.Models
         [Compare("UserPassword", ErrorMessage = "Passwords do not match.")]
         [DataType(DataType.Password)]
         [NotMapped]
-        public string ConfirmPassword { get; set; } 
+        public string ConfirmPassword { get; set; }
 
-
+        public Nullable<System.DateTime> CreatedAt { get; set; }
+        public Nullable<System.DateTime> ModifiedAt { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FORUM_POSTS> FORUM_POSTS { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<COMMENT> COMMENTs { get; set; }
     }
 }

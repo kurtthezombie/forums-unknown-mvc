@@ -8,6 +8,9 @@
         <EntityTypeShape EntityType="ForumsUnknownModel.FORUM_POSTS" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
         <EntityTypeShape EntityType="ForumsUnknownModel.FORUM_USERS" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
         <AssociationConnector Association="ForumsUnknownModel.FK__FORUM_POS__Autho__4E88ABD4" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ForumsUnknownModel.COMMENT" Width="1.5" PointX="5.25" PointY="1" />
+        <AssociationConnector Association="ForumsUnknownModel.FK__COMMENT__AuthorI__656C112C" />
+        <AssociationConnector Association="ForumsUnknownModel.FK__COMMENT__PostID__66603565" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
