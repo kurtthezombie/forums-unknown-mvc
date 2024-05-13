@@ -8,7 +8,7 @@ namespace ForumsUnknown.Models
     public class PostCommentsViewModel
     {
         public ForumPostViewModel ForumPost { get; set; }
-        public List<COMMENT> Comments { get; set; }
+        public List<CommentViewModel> Comments { get; set; }
 
         public COMMENT Comment { get; set; }
     }

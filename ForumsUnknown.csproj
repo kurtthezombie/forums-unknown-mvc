@@ -139,6 +139,7 @@
     <Compile Include="Models\COMMENT.cs">
       <DependentUpon>ForumsUnknown.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CommentViewModel.cs" />
     <Compile Include="Models\ForumPostViewModel.cs" />
     <Compile Include="Models\ForumsUnknown.Context.cs">
       <AutoGen>True</AutoGen>

@@ -130,7 +130,21 @@ namespace ForumsUnknown.Controllers
                             AuthorName = u.UserName
                         }).FirstOrDefault();
             //query comments
-            var comments = db.COMMENT.Where(c => c.PostID == id).ToList();
+            //var comments = db.COMMENT.Where(c => c.PostID == id).ToList();
+            var comments = (from c in db.COMMENT
+                            join u in db.FORUM_USERS on c.AuthorID equals u.UserID
+                            where c.PostID == postId
+                            orderby c.CreatedAt descending
+                            select new CommentViewModel
+                            {
+                                CommentID = c.CommentID,
+                                Content = c.Content,
+                                AuthorName = u.UserName, //get authorname instead of id
+                                PostID = c.PostID,
+                                CreatedAt = c.CreatedAt,
+                                ModifiedAt = c.ModifiedAt
+                            }).ToList();
+            ;
 
             //create new PCVM instance
             var PostCommentsVM = new PostCommentsViewModel();
