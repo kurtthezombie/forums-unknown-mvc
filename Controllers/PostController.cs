@@ -36,6 +36,7 @@ namespace ForumsUnknown.Controllers
             {
                 //set getdate
                 post.CreatedAt = DateTime.Now;
+                post.ModifiedAt = DateTime.Now;
                 //query the insertion
                 db.FORUM_POSTS.Add(post);
                 db.SaveChanges();
@@ -83,7 +84,7 @@ namespace ForumsUnknown.Controllers
 
                 data.Title = post.Title;
                 data.Content = post.Content;
-                //data.ModifiedAt = getdate.. 
+                data.ModifiedAt = DateTime.Now;
                 db.SaveChanges();
 
                 return RedirectToAction("MyPosts", new { id = Session["UserId"] });
@@ -106,6 +107,15 @@ namespace ForumsUnknown.Controllers
         {
             var data = db.FORUM_POSTS.Find(id);
 
+            //delete comments first before the post
+            var comments = db.COMMENT.Where(c => c.PostID == id).ToList();
+
+            if(comments.Any())
+            {
+                db.COMMENT.RemoveRange(comments);
+            }
+
+            //delete posts then
             db.FORUM_POSTS.Remove(data);
             db.SaveChanges();
         }
