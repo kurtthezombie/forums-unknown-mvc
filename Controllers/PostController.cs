@@ -171,8 +171,9 @@ namespace ForumsUnknown.Controllers
         }
 
         [Route("MyPosts")]
-        public ActionResult MyPosts(int id)
+        public ActionResult MyPosts()
         {
+            int id = (int)Session["UserId"];
             var posts = db.FORUM_POSTS.Where(post => post.AuthorID == id).ToList();
             return View(posts);
         }

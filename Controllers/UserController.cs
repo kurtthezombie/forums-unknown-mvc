@@ -10,6 +10,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using System.Web.SessionState;
 
 namespace ForumsUnknown.Controllers
 {
@@ -167,8 +168,13 @@ namespace ForumsUnknown.Controllers
         }
         [Authorize]
         [Route("MyProfile")]
-        public ActionResult UserProfile(int? id)
+        public ActionResult UserProfile()
         {
+            int id = (int)Session["UserId"];
+            //if (id != SessionId)
+            //{
+            //    return RedirectToAction("Index", "Home", null);
+            //}
             if (Session["Username"] != null )
             {
                 FORUM_USERS user = db.FORUM_USERS.Find(id);
@@ -205,8 +211,9 @@ namespace ForumsUnknown.Controllers
         [Authorize]
         [HttpGet]
         [Route("EditProfile")]
-        public ActionResult EditUser(int id)
+        public ActionResult EditUser()
         {
+            int id = (int)Session["UserId"];
             FORUM_USERS user = db.FORUM_USERS.Find(id);
 
             if (user == null)

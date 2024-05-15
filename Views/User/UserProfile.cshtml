@@ -37,7 +37,7 @@
 </div>
 <p>
     @Html.ActionLink("Go Back", "RedirectToIndex", "Home", null, htmlAttributes: new { @class = "btn btn-secondary" }) |
-    @Html.ActionLink("Edit", "EditUser", new { id = Model.UserID }, new { @class = "btn btn-warning" }) |
+    @Html.ActionLink("Edit", "EditUser", null, new { @class = "btn btn-warning" }) |
     @if (Session["Username"].ToString() != "admin")
     {
         @Html.ActionLink("Delete", "DeleteUser", "User", new { id = Model.UserID }, new { @class = "btn btn-danger", onclick = "return confirm('Are you sure you want to delete this account?');" })

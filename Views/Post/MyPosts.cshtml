@@ -7,7 +7,7 @@
 <h2 class="display-2">My Posts</h2>
 <br />
 <p>
-    @Html.ActionLink("Create New", "CreatePost", "Post", htmlAttributes: new { @class = "btn btn-outline-light" })
+    @Html.ActionLink("+ Create New", "CreatePost", "Post", htmlAttributes: new { @class = "btn btn-outline-light" })
 </p>
 
 
@@ -20,7 +20,9 @@
                 <button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 </button>
                 <ul class="dropdown-menu">
-                    <li>@Html.ActionLink("Edit","EditPost","Post", new { id = item.PostID }, htmlAttributes: new { @class = "dropdown-item" }) </li>
+                    <li>
+                        @Html.ActionLink("Edit","EditPost","Post", new { id = item.PostID }, htmlAttributes: new { @class = "dropdown-item" })
+                    </li>
                     <li><a class="dropdown-item text-danger" href="@Url.Action("DeletePost", "Post", new { id = item.PostID})" onclick="confirm('Delete this post?')">Delete</a></li>
                 </ul>
             </div>
