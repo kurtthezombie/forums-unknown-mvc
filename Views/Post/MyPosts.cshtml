@@ -21,6 +21,12 @@
                 </button>
                 <ul class="dropdown-menu">
                     <li>
+                        @*@using (Html.BeginForm("EditPost", "Post", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="id" value="@item.PostID" />
+                            <button type="submit" class="dropdown-item">Edit</button>
+                        }*@
                         @Html.ActionLink("Edit","EditPost","Post", new { id = item.PostID }, htmlAttributes: new { @class = "dropdown-item" })
                     </li>
                     <li><a class="dropdown-item text-danger" href="@Url.Action("DeletePost", "Post", new { id = item.PostID})" onclick="confirm('Delete this post?')">Delete</a></li>
@@ -43,3 +49,32 @@
 
 }
 
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var cards = document.querySelectorAll(".card");
+
+        cards.forEach(function (card) {
+            card.addEventListener("click", function (event) {
+                if (event.target.closest('.dropdown-toggle') || event.target.closest('.dropdown-menu')) {
+                    return;
+                }
+                var postId = this.getAttribute("data-id");
+                window.location.href = '/Post/' + postId;
+            });
+        });
+
+        var dropdownToggles = document.querySelectorAll(".dropdown-toggle");
+        dropdownToggles.forEach(function (toggle) {
+            toggle.addEventListener("click", function (event) {
+                event.stopPropagation();
+            });
+        });
+
+        var dropdownItems = document.querySelectorAll(".dropdown-menu");
+        dropdownItem.forEach(function (menu) {
+            menu.addEventListener("click", function (event) {
+                event.stopPropagation();
+            })
+        })
+    });
+</script>
