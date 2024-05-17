@@ -30,7 +30,7 @@
                             @using (Html.BeginForm("Search", "Post", FormMethod.Post, htmlAttributes: new { @class ="d-flex container" }))
                             {
                                 @Html.AntiForgeryToken();
-                                <input type="text" name="searchText" class="form-control bg-dark rounded-start-1 rounded-0 text-light border-0 w-100" />
+                                <input type="text" name="searchText" class="form-control bg-dark rounded-start-1 rounded-0 text-light border-0 w-100" required/>
                                 <button type="submit" class="btn btn-dark rounded-0 rounded-end-3 border-start border-0 border-secondary">Search</button>
                             }
 
