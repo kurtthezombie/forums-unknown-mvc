@@ -195,8 +195,51 @@ namespace ForumsUnknown.Controllers
             else
             {
                 return RedirectToAction("Post","Post", new { id = comment.PostID });
+            }  
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Route("Search")]
+        public ActionResult Search(string searchText)
+        {
+            //no toLower
+            var posts = (from p in db.FORUM_POSTS
+                         join u in db.FORUM_USERS on p.AuthorID equals u.UserID
+                         where (p.Title.Contains(searchText) || p.Content.Contains(searchText))
+                         orderby p.CreatedAt descending
+                         select new ForumPostViewModel
+                         {
+                             PostID = p.PostID,
+                             Title = p.Title,
+                             Content = p.Content,
+                             CreatedAt = (DateTime)p.CreatedAt,
+                             ModifiedAt = (DateTime)p.ModifiedAt,
+                             AuthorName = u.UserName
+                         }).ToList();
+            //has toLower function
+            //var posts = (from p in db.FORUM_POSTS
+            //             join u in db.FORUM_USERS on p.AuthorID equals u.UserID
+            //             where (p.Title.ToLower().Contains(searchText.ToLower()) || 
+            //                    p.Content.ToLower().Contains(searchText.ToLower()))
+            //                    && (p.Title is string && p.Content is string)
+                                
+            //             orderby p.CreatedAt descending
+            //             select new ForumPostViewModel
+            //             {
+            //                 PostID = p.PostID,
+            //                 Title = p.Title,
+            //                 Content = p.Content,
+            //                 CreatedAt = (DateTime)p.CreatedAt,
+            //                 ModifiedAt = (DateTime)p.ModifiedAt,
+            //                 AuthorName = u.UserName
+            //             }).ToList();
+            if (posts.Count == 0)
+            {
+                return View(new List<ForumPostViewModel>());
             }
-            
+
+            return View(posts);
         }
     }
 }

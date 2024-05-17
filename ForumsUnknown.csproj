@@ -250,6 +250,7 @@
     <Content Include="Views\Admin\CreatePost.cshtml" />
     <Content Include="Views\Post\MyPosts.cshtml" />
     <Content Include="Views\Post\EditPost.cshtml" />
+    <Content Include="Views\Post\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,46 @@
+﻿@model IEnumerable<ForumsUnknown.Models.ForumPostViewModel>
+@using System.Linq
+
+@{
+    ViewBag.Title = "Search";
+    int resultsCount = Model.Count();
+}
+
+<h2>Search results: @Model.Count() found</h2>
+
+@if (!Model.Any())
+{
+    <h2 class="display-6 mt-5">Be the first one to <a href="@Url.Action("CreatePost","Post")" class="text-danger text-decoration-none">share.</a></h2>
+    <br />
+    <br />
+    <br />
+}
+else
+{
+    foreach (var item in Model)
+    {
+        <div class="container bg-transparent post">
+            <div class="card p-5 pb-3 bg-transparent col-lg-5 border-light mx-auto custom-highlight" data-id="@item.PostID">
+                <div class="card-header border-light">
+                    <div class="card-title display-5 fw-normal">@item.Title</div>
+                    <div class="card-subtitle h5">by <span class="text-danger">@item.AuthorName</span></div>
+                </div>
+                <div class="card-body">
+                    @if (item.ModifiedAt != item.CreatedAt)
+                    {
+                        <p class="w-25"><span class="bg-secondary text-light px-2">Edited</span></p>
+                    }
+                    @item.Content
+                </div>
+                <div class="card-footer">
+                    Posted on: @item.CreatedAt
+                </div><br />
+                <div class="px-0"><button class="btn btn-sm btn-outline-light w-100">Comment</button></div>
+            </div>
+
+        </div>
+        <br />
+        <br />
+        <br />
+    }
+}

@@ -23,7 +23,22 @@
             </button>
             <div class="collapse navbar-collapse d-sm-inline-flex justify-content-end">
                 <ul class="navbar-nav">
+                @if (Session["Username"] != null)
+                {
+                    <li>
+                        @*<div class="d-flex container">*@
+                            @using (Html.BeginForm("Search", "Post", FormMethod.Post, htmlAttributes: new { @class ="d-flex container" }))
+                            {
+                                @Html.AntiForgeryToken();
+                                <input type="text" name="searchText" class="form-control bg-dark rounded-start-1 rounded-0 text-light border-0 w-100" />
+                                <button type="submit" class="btn btn-dark rounded-0 rounded-end-3 border-start border-0 border-secondary">Search</button>
+                            }
+
+                        @*</div>*@
+                    </li>
+                }
                     <li>@Html.ActionLink("HOME", "Index", "Home", new { area = "" }, new { @class = "nav-link text-light brawler-regular" })</li>
+
 
                     @if (Session["Username"] == null)
                     {
