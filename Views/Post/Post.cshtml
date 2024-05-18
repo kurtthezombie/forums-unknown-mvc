@@ -28,7 +28,6 @@
                         <div class="card-body p-0">
                             @Html.TextAreaFor(model => model.Comment.Content, htmlAttributes: new { @class = "form-control-sm bg-transparent text-white w-100 border-0 border-bottom rounded-0 pl-5 pb-0", placeholder = "Add a comment..." })
                             @Html.ValidationMessageFor(model => model.Comment.Content, "", new { @class = "text-danger" })
-                            @*<textarea class="form-control-sm bg-transparent text-white w-100 border-0 border-bottom rounded-0 pl-5" style="padding-bottom: 0px;" placeholder="Add a comment..."></textarea>*@
                             <br />
                             <div class="form-group d-flex justify-content-end">
                                 @Html.HiddenFor(model => model.Comment.AuthorID, new { Value = Session["UserId"] })

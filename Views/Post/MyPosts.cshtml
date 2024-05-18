@@ -21,12 +21,6 @@
                 </button>
                 <ul class="dropdown-menu">
                     <li>
-                        @*@using (Html.BeginForm("EditPost", "Post", FormMethod.Post))
-                        {
-                            @Html.AntiForgeryToken()
-                            <input type="hidden" name="id" value="@item.PostID" />
-                            <button type="submit" class="dropdown-item">Edit</button>
-                        }*@
                         @Html.ActionLink("Edit","EditPost","Post", new { id = item.PostID }, htmlAttributes: new { @class = "dropdown-item" })
                     </li>
                     <li><a class="dropdown-item text-danger" href="@Url.Action("DeletePost", "Post", new { id = item.PostID})" onclick="confirm('Delete this post?')">Delete</a></li>
@@ -34,7 +28,6 @@
             </div>
             <div class="card-header border-light">
                 <div class="card-title display-5 fw-normal">@item.Title</div>
-                @*<div class="card-subtitle h5">by <span class="text-danger"></span></div>*@
             </div>
             <div class="card-body">
                 @item.Content
