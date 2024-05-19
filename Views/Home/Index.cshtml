@@ -1,6 +1,7 @@
 ﻿@model List<ForumsUnknown.Models.ForumPostViewModel>
 @{
     ViewBag.Title = "Home Page";
+    Func<DateTime?, string> FormatDate = (date) => date?.ToString("MMMM dd yyyy hh:mm tt");
 }
 
 <main>
@@ -82,7 +83,7 @@
                             @item.Content
                         </div>
                         <div class="card-footer">
-                            Posted on: @item.CreatedAt
+                            Posted on: @FormatDate(item.CreatedAt)
                         </div><br />
                         <div class="px-0"><button class="btn btn-sm btn-outline-light w-100">Comment</button></div>
                     </div>

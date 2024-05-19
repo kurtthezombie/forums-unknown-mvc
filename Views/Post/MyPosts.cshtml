@@ -23,7 +23,7 @@
                     <li>
                         @Html.ActionLink("Edit","EditPost","Post", new { id = item.PostID }, htmlAttributes: new { @class = "dropdown-item" })
                     </li>
-                    <li><a class="dropdown-item text-danger" href="@Url.Action("DeletePost", "Post", new { id = item.PostID})" onclick="confirm('Delete this post?')">Delete</a></li>
+                    <li><a class="dropdown-item text-danger" href="@Url.Action("DeletePost", "Post", new { id = item.PostID})" onclick="return confirm('Delete this post?');">Delete</a></li>
                 </ul>
             </div>
             <div class="card-header border-light">
