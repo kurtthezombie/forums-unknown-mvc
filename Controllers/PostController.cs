@@ -120,10 +120,16 @@ namespace ForumsUnknown.Controllers
             db.SaveChanges();
         }
 
+        
         [HttpGet]
+        [Authorize]
         [Route("Post/{id}")]
         public ActionResult Post(int id)
         {
+            if (Session["Username"] == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
             //FORUM_POSTS post = db.FORUM_POSTS.Find(id);
             int postId = id;
 

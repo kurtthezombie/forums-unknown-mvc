@@ -63,11 +63,21 @@ namespace ForumsUnknown.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    //set dates
+                    user.CreatedAt = DateTime.Now;
+                    user.ModifiedAt = DateTime.Now;
+                    //add
                     db.FORUM_USERS.Add(user);
+                    //save
                     db.SaveChanges();
+
+                    //clear fields
                     ModelState.Clear();
+
+                    //mesage
                     ViewBag.Notification = "User created.";
                     ViewBag.NotificationColor = "text-success";
+
                     return View();
                 }
                 else
@@ -120,6 +130,7 @@ namespace ForumsUnknown.Controllers
                         data.EmailAddress = user.EmailAddress;
                         data.UserPassword = user.UserPassword;
                         data.ConfirmPassword = user.ConfirmPassword;
+                        data.ModifiedAt = DateTime.Now;
                     }
 
                     db.SaveChanges();
@@ -147,9 +158,15 @@ namespace ForumsUnknown.Controllers
             }
             else
             {
+                //delete comments first
+                var comments = db.COMMENT.Where(x => x.AuthorID == id);
+                db.COMMENT.RemoveRange(comments);
+
                 //delete posts of user before deleting user
                 var posts = db.FORUM_POSTS.Where(x => x.AuthorID == id);
                 db.FORUM_POSTS.RemoveRange(posts);
+
+                //remove the user
                 db.FORUM_USERS.Remove(data);
                 db.SaveChanges();
             }

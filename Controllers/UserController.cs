@@ -101,15 +101,6 @@ namespace ForumsUnknown.Controllers
             }
         }
 
-        //private bool passwordMatch(string username, string password)
-        //{
-        //    using (var db = new FuDBContext())
-        //    {
-        //        //get row matching password and username 
-        //        //check if password written matches password in database
-        //    }
-        //}
-
         private FORUM_USERS GetUserByUsername(string username)
         {
             using (var db = new FuDBContext())
@@ -133,6 +124,7 @@ namespace ForumsUnknown.Controllers
                 return View();
             }
         }
+
         [HttpPost]
         [Route("Register")]
         [ValidateAntiForgeryToken]
@@ -166,6 +158,7 @@ namespace ForumsUnknown.Controllers
                 }
             }
         }
+
         [Authorize]
         [Route("MyProfile")]
         public ActionResult UserProfile()
@@ -190,6 +183,27 @@ namespace ForumsUnknown.Controllers
                 return RedirectToAction("Login","User");
             }
 
+        }
+
+        [HttpGet]
+        [Authorize]
+        [Route("ViewProfile/{username}")]
+        public ActionResult ViewProfile(string username)
+        {
+            //get data
+            var user = db.FORUM_USERS.FirstOrDefault(u => u.UserName.ToString() == username);
+            var posts = db.FORUM_POSTS.Where(p => p.AuthorID == user.UserID).ToList();
+            //create viewmodel instance
+            var UserPostsVM = new UserWithPosts();
+            //assign to viewmodels
+            UserPostsVM.User = user;
+            UserPostsVM.Posts = posts;
+
+            if(user == null)
+            {
+                return HttpNotFound();
+            }
+            return View(UserPostsVM);
         }
 
         public ActionResult DeleteUser (int id)

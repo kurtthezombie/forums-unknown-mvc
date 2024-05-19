@@ -1,0 +1,61 @@
+﻿@model ForumsUnknown.Models.UserWithPosts
+
+@{
+    ViewBag.Title = "ViewProfile";
+    string CreatedAt = Model.User.CreatedAt?.ToString("MMMM dd yyyy");
+    Func<DateTime?, string> FormatDate = (date) => date?.ToString("MMMM dd yyyy");
+}
+<p>
+    @Html.ActionLink("Back", "Index", "Home", null, htmlAttributes: new { @class = "btn btn-outline-light" })
+</p>
+<div>
+    <h2 class="text-danger">
+        @Model.User.UserName
+    </h2>
+    <hr />
+    <dl class="dl-horizontal">
+        <dd>
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.EmailAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.EmailAddress)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.User.CreatedAt)
+        </dt>
+        <dd>
+            @CreatedAt
+        </dd>
+    </dl>
+</div>
+<h2>Posts:</h2>
+@if (Model.Posts == null || !Model.Posts.Any())
+{
+    <br />
+    <h6 class="text-center">Did not post anything yet...</h6>
+}
+else
+{
+    foreach (var post in Model.Posts)
+    {
+        <div class="card bg-transparent border-1 border-light">
+            <div class="card-body">
+                <h3>
+                    @post.Title
+                </h3>
+                <p>
+                    @post.Content
+                </p>
+                <p>
+                    @FormatDate(post.CreatedAt)
+                </p>
+            </div>
+        </div>
+
+    }
+}
+

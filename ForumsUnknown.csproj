@@ -164,6 +164,7 @@
     </Compile>
     <Compile Include="Models\PostCommentsViewModel.cs" />
     <Compile Include="Models\TableCountsViewModel.cs" />
+    <Compile Include="Models\UserWithPosts.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -251,6 +252,7 @@
     <Content Include="Views\Post\MyPosts.cshtml" />
     <Content Include="Views\Post\EditPost.cshtml" />
     <Content Include="Views\Post\Search.cshtml" />
+    <Content Include="Views\User\ViewProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -12,13 +12,13 @@
             <h1 class="card-title display-2">@Model.ForumPost.Title</h1>
             <h5 class="card-subtitle text-secondary">by <span class="text-danger">@Model.ForumPost.AuthorName</span></h5>
             <hr class="w-25" />
-            <h3 class="card-body">@Model.ForumPost.Content</h3>
+            <h4 class="card-body">@Model.ForumPost.Content</h4>
             @{
                 string dateCreated = Model.ForumPost.CreatedAt?.ToString("MMMM dd yyyy");
             }
-            <br /><br /><br />
+            <br />
             <p class="text-secondary">@dateCreated</p>
-            <div class="comment-section mt-5">
+            <div class="comment-section mt-1">
                 <p> @ViewBag.CommentCount Comments</p>
                 @using (Html.BeginForm("CreateComment", "Post", FormMethod.Post))
                 {
@@ -38,13 +38,20 @@
                         </div>
                     </div>
                 }
+                <br />
                 <!--for each existing comment, sort by newest-->
                 @foreach (var comment in Model.Comments)
                 {
-                    <div class="comment-row">
-                        <h5>@comment.AuthorName</h5>
-                        <p>@comment.Content</p><br />
-                        <p>@comment.CreatedAt</p>
+                    string commentCreatedAt = comment.CreatedAt?.ToString("MMMM dd yyyy");
+                    string author = comment.AuthorName.ToString();
+                    <div class="comment-row mb-1 py-0">
+                        <div class="card bg-transparent border border-3 border-light">
+                            <div class="card-body">
+                                <a class="text-danger mb-0 text-decoration-none" href="@Url.Action("ViewProfile","User", new { username = author})">@author</a>
+                                <h6>@comment.Content</h6>
+                                <p class="mb-0 text-secondary">@commentCreatedAt</p>
+                            </div>
+                        </div>
                     </div>
                 }
             </div>

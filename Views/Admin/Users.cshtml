@@ -23,6 +23,12 @@
         <th>
             @Html.DisplayNameFor(model => model.EmailAddress)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedAt)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ModifiedAt)
+        </th>
         <th>Actions</th>
     </tr>
 
@@ -39,13 +45,20 @@
                 @Html.DisplayFor(modelItem => item.EmailAddress)
             </td>
             <td>
-                @Html.ActionLink("Edit", "EditUser", new { id=item.UserID }, new { @class = "btn btn-primary" }) |
-                @Html.ActionLink("Details", "DetailsUser", new {  id=item.UserID  }, new { @class = "btn btn-secondary"}) |
+                @Html.DisplayFor(modelItem => item.CreatedAt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModifiedAt)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "EditUser", new { id = item.UserID }, new { @class = "btn btn-primary" }) |
+                @Html.ActionLink("Details", "DetailsUser", new { id = item.UserID }, new { @class = "btn btn-secondary" }) |
                 @if (item.UserID != 1)
                 {
-                    @Html.ActionLink("Delete", "DeleteUser", new {  id=item.UserID  }, new { @class = "btn btn-danger", onclick = "return confirm('Delete this user?')"})
+                    @Html.ActionLink("Delete", "DeleteUser", new { id = item.UserID }, new { @class = "btn btn-danger", onclick = "return confirm('Delete this user?')" })
                 }
             </td>
+
         </tr>
     }
 
