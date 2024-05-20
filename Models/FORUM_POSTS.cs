@@ -13,7 +13,6 @@ namespace ForumsUnknown.Models
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
 
     public partial class FORUM_POSTS
     {
@@ -21,6 +20,8 @@ namespace ForumsUnknown.Models
         public FORUM_POSTS()
         {
             this.COMMENTs = new HashSet<COMMENT>();
+            this.POST_IMAGE = new HashSet<POST_IMAGE>();
+            this.REPORTED_POSTS = new HashSet<REPORTED_POSTS>();
         }
     
         public int PostID { get; set; }
@@ -28,20 +29,27 @@ namespace ForumsUnknown.Models
         [Required]
         [DisplayName("Title")]
         public string Title { get; set; }
-        
+
         [DisplayName("Content")]
         public string Content { get; set; }
-        
-        [DisplayName("Date Posted")]
-        public Nullable<System.DateTime> CreatedAt { get; set; }
 
+        [DisplayName("Status")]
+        public string PostStatus { get; set; }
+
+        [DisplayName("Date Posted")]
+        public System.DateTime CreatedAt { get; set; }
+
+        public Nullable<System.DateTime> ModifiedAt { get; set; }
+        
         [Required]
         public int AuthorID { get; set; }
-        
-        public Nullable<System.DateTime> ModifiedAt { get; set; }
     
-        public virtual FORUM_USERS FORUM_USERS { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<COMMENT> COMMENTs { get; set; }
+        public virtual FORUM_USERS FORUM_USERS { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<POST_IMAGE> POST_IMAGE { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<REPORTED_POSTS> REPORTED_POSTS { get; set; }
     }
 }

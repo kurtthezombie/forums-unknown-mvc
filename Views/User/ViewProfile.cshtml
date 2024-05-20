@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "ViewProfile";
-    string CreatedAt = Model.User.CreatedAt?.ToString("MMMM dd yyyy");
+    string CreatedAt = Model.User.CreatedAt.ToString("MMMM dd yyyy");
     Func<DateTime?, string> FormatDate = (date) => date?.ToString("MMMM dd yyyy");
 }
 <p>
@@ -13,10 +13,12 @@
         @Model.User.UserName
     </h2>
     <hr />
+    @if (Model.User.ProfilePicPath != null)
+    {
+        <img src="@Model.User.ProfilePicPath" alt="ProfilePicture" class="rounded-circle border-3 border border-light" height="150" />
+    }
+    <br /><br />
     <dl class="dl-horizontal">
-        <dd>
-        </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.User.EmailAddress)
         </dt>

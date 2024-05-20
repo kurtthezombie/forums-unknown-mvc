@@ -9,6 +9,10 @@
 <div>
     <hr />
     <dl class="dl-horizontal">
+        @if (Model.ProfilePicPath != null)
+        {
+            <img src="@Model.ProfilePicPath" alt="ProfilePicture" class="rounded-circle border-3 border border-light" height="150"/>
+        }
         <dt>
             @Html.DisplayNameFor(model => model.UserID)
         </dt>

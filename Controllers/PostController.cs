@@ -13,6 +13,8 @@ namespace ForumsUnknown.Controllers
     {
         FuDBContext db = new FuDBContext();
 
+        #region CRUD POST
+
         [HttpGet]
         [Route("CreatePost")]
         public ActionResult CreatePost()
@@ -35,6 +37,7 @@ namespace ForumsUnknown.Controllers
             if (ModelState.IsValid)
             {
                 //set getdate
+                post.PostStatus = "pending";
                 post.CreatedAt = DateTime.Now;
                 post.ModifiedAt = DateTime.Now;
                 //query the insertion
@@ -156,6 +159,7 @@ namespace ForumsUnknown.Controllers
                                 CommentID = c.CommentID,
                                 Content = c.Content,
                                 AuthorName = u.UserName, //get authorname instead of id
+                                ProfilePicPath = u.ProfilePicPath,
                                 PostID = c.PostID,
                                 CreatedAt = c.CreatedAt,
                                 ModifiedAt = c.ModifiedAt
@@ -175,6 +179,7 @@ namespace ForumsUnknown.Controllers
 
             return View(PostCommentsVM);
         }
+        #endregion
 
         [Route("MyPosts")]
         public ActionResult MyPosts()

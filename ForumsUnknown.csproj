@@ -163,6 +163,12 @@
       <DependentUpon>ForumsUnknown.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PostCommentsViewModel.cs" />
+    <Compile Include="Models\POST_IMAGE.cs">
+      <DependentUpon>ForumsUnknown.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\REPORTED_POSTS.cs">
+      <DependentUpon>ForumsUnknown.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TableCountsViewModel.cs" />
     <Compile Include="Models\UserWithPosts.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -256,7 +262,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Images\" />
+    <Folder Include="Images\ProfileImages\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />

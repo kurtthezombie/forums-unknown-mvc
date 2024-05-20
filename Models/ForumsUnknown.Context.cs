@@ -10,7 +10,6 @@
 namespace ForumsUnknown.Models
 {
     using System;
-    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
@@ -26,9 +25,10 @@ namespace ForumsUnknown.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<COMMENT> COMMENT { get; set; }
         public virtual DbSet<FORUM_POSTS> FORUM_POSTS { get; set; }
         public virtual DbSet<FORUM_USERS> FORUM_USERS { get; set; }
-        public virtual DbSet<COMMENT> COMMENT { get; set; }
-        //public IEnumerable<object> COMMENT { get; internal set; }
+        public virtual DbSet<POST_IMAGE> POST_IMAGE { get; set; }
+        public virtual DbSet<REPORTED_POSTS> REPORTED_POSTS { get; set; }
     }
 }

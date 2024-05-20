@@ -14,6 +14,7 @@ namespace ForumsUnknown.Models
         public string Content { get; set; }
 
         public string AuthorName { get; set; } // Changed from AuthorID to AuthorName
+        public string ProfilePicPath { get; set; }
 
         public int? PostID { get; set; }
         public DateTime? CreatedAt { get; set; }

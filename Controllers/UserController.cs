@@ -50,6 +50,7 @@ namespace ForumsUnknown.Controllers
                 {
                     Session["Username"] = username;
                     Session["UserId"] = UserInfo.UserID;
+                    Session["ProfilePic"] = UserInfo.ProfilePicPath;
                     ViewBag.Notification = "Successfully logged in.";
                     ViewBag.NotificationColor = "text-success";
                     //set authorization here
@@ -142,6 +143,9 @@ namespace ForumsUnknown.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    user.CreatedAt = DateTime.Now;
+                    user.ModifiedAt = DateTime.Now;
+
                     db.FORUM_USERS.Add(user);
                     db.SaveChanges();
 
@@ -243,19 +247,41 @@ namespace ForumsUnknown.Controllers
         [Route("EditProfile")]
         public ActionResult EditUser(FORUM_USERS user)
         {
+            //create unique name for file
+            
+            string fileName = Path.GetFileNameWithoutExtension(user.ImageFile.FileName)
+                + DateTime.Now.ToString("yyyyMMdd_mmssfff")
+                + Path.GetExtension(user.ImageFile.FileName);
+            
+            //set image path for database
+            
+            user.ProfilePicPath = "../Images/ProfileImages/" + fileName;
+
             if (ModelState.IsValid)
             {
+                
                 if (IsUsernameUnique(user.UserID, user.UserName))
+                
                 {
                     //get the row
+                    
                     var data = db.FORUM_USERS.Where(x => x.UserID == user.UserID).FirstOrDefault();
                     //edit data
+                    
                     if (data != null)
                     {
+                        //set filename for the image to be saved locally
+                        fileName = Path.Combine(Server.MapPath("~/Images/ProfileImages/"), fileName);
+
+                        //save image
+                        user.ImageFile.SaveAs(fileName);
+
                         data.UserName = user.UserName;
                         data.EmailAddress = user.EmailAddress;
+                        data.ProfilePicPath = user.ProfilePicPath; //save the path in database
                         data.UserPassword = user.UserPassword;
                         data.ConfirmPassword = user.ConfirmPassword;
+                        data.ModifiedAt = DateTime.Now;
                     }
 
                     db.SaveChanges();

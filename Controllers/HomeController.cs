@@ -28,7 +28,8 @@ namespace ForumsUnknown.Controllers
                              Content = p.Content,
                              CreatedAt = (DateTime)p.CreatedAt,
                              ModifiedAt = (DateTime)p.ModifiedAt,
-                             AuthorName = u.UserName
+                             AuthorName = u.UserName,
+                             ProfilePicPath = u.ProfilePicPath 
                          }).ToList();
 
             return View(posts);

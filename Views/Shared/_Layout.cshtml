@@ -23,18 +23,18 @@
             </button>
             <div class="collapse navbar-collapse d-sm-inline-flex justify-content-end">
                 <ul class="navbar-nav">
-                @if (Session["Username"] != null)
-                {
-                    <li>
-                        @using (Html.BeginForm("Search", "Post", FormMethod.Post, htmlAttributes: new { @class = "d-flex container" }))
-                        {
-                            @Html.AntiForgeryToken();
-                            <input type="text" name="searchText" class="form-control bg-dark rounded-start-1 rounded-0 text-light border-0 w-100" required />
-                            <button type="submit" class="btn btn-dark rounded-0 rounded-end-3 border-start border-0 border-secondary">Search</button>
-                        }
+                    @if (Session["Username"] != null)
+                    {
+                        <li>
+                            @using (Html.BeginForm("Search", "Post", FormMethod.Post, htmlAttributes: new { @class = "d-flex container" }))
+                            {
+                                @Html.AntiForgeryToken();
+                                <input type="text" name="searchText" class="form-control bg-dark rounded-start-1 rounded-0 text-light border-0 w-100" required />
+                                <button type="submit" class="btn btn-dark rounded-0 rounded-end-3 border-start border-0 border-secondary">Search</button>
+                            }
 
-                    </li>
-                }
+                        </li>
+                    }
                     <li>@Html.ActionLink("HOME", "Index", "Home", new { area = "" }, new { @class = "nav-link text-light brawler-regular" })</li>
 
 
@@ -49,9 +49,13 @@
                     {
                         <li>@Html.ActionLink("MY POSTS", "MyPosts", "Post", null, new { @class = "nav-link text-light brawler-regular", })</li>
                         <li><a href="@Url.Action("CreatePost", "Post")" class="btn btn-outline-light mx-2">+CREATE</a></li>
-                        <li>
+                        <li class="">
                             <div class="dropdown">
                                 <button class="btn dropdown-toggle text-light" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    @if (Session["ProfilePic"] != null)
+                                    {
+                                        <img src="@Session["ProfilePic"]" width="30" class="rounded-circle border border-3 border-light" />
+                                    }
                                     Welcome, <span class="text-danger">@Session["Username"]</span>
                                 </button>
                                 <div class="dropdown-menu bg-transparent" aria-labelledby="dropdownMenuButton">

@@ -14,7 +14,7 @@
             <hr class="w-25" />
             <h4 class="card-body">@Model.ForumPost.Content</h4>
             @{
-                string dateCreated = Model.ForumPost.CreatedAt?.ToString("MMMM dd yyyy");
+                string dateCreated = Model.ForumPost.CreatedAt?.ToString("MMMM dd yyyy hh:mm tt");
             }
             <br />
             <p class="text-secondary">@dateCreated</p>
@@ -42,13 +42,19 @@
                 <!--for each existing comment, sort by newest-->
                 @foreach (var comment in Model.Comments)
                 {
-                    string commentCreatedAt = comment.CreatedAt?.ToString("MMMM dd yyyy");
+                    string commentCreatedAt = comment.CreatedAt?.ToString("MMMM dd yyyy hh:mm tt");
                     string author = comment.AuthorName.ToString();
                     <div class="comment-row mb-1 py-0">
                         <div class="card bg-transparent border border-3 border-light">
                             <div class="card-body">
-                                <a class="text-danger mb-0 text-decoration-none" href="@Url.Action("ViewProfile","User", new { username = author})">@author</a>
-                                <h6>@comment.Content</h6>
+                                <a class="text-danger mb-0 text-decoration-none" href="@Url.Action("ViewProfile","User", new { username = author})">
+                                    @if (comment.ProfilePicPath != null)
+                                    {
+                                        <img src="@comment.ProfilePicPath" height="30" class="rounded-circle"/>
+                                    }
+                                    @author
+                                </a>
+                                <h6 class="mt-3">@comment.Content</h6>
                                 <p class="mb-0 text-secondary">@commentCreatedAt</p>
                             </div>
                         </div>

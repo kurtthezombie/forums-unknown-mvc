@@ -14,32 +14,41 @@ namespace ForumsUnknown.Models
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+    using System.Web;
 
     public partial class FORUM_USERS
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public FORUM_USERS()
         {
-            this.FORUM_POSTS = new HashSet<FORUM_POSTS>();
             this.COMMENTs = new HashSet<COMMENT>();
+            this.FORUM_POSTS = new HashSet<FORUM_POSTS>();
+            this.REPORTED_POSTS = new HashSet<REPORTED_POSTS>();
         }
-    
+        [DisplayName("ID")]    
+        
         public int UserID { get; set; }
 
         [Required]
         [DisplayName("Username")]
         public string UserName { get; set; }
-        
+
         [Required]
         [DisplayName("Email Address")]
         [DataType(DataType.EmailAddress)]
         public string EmailAddress { get; set; }
-        
+
+        [DisplayName("Profile Picture")]
+        public string ProfilePicPath { get; set; }
+
+        [NotMapped]
+        public HttpPostedFileBase ImageFile { get; set; }
+
         [Required]
         [DisplayName("Password")]
         [DataType(DataType.Password)]
         public string UserPassword { get; set; }
-
+        
         [Required]
         [DisplayName("Confirm Password")]
         [Compare("UserPassword", ErrorMessage = "Passwords do not match.")]
@@ -47,12 +56,14 @@ namespace ForumsUnknown.Models
         [NotMapped]
         public string ConfirmPassword { get; set; }
 
-        public Nullable<System.DateTime> CreatedAt { get; set; }
+        public System.DateTime CreatedAt { get; set; }
         public Nullable<System.DateTime> ModifiedAt { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<COMMENT> COMMENTs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FORUM_POSTS> FORUM_POSTS { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<COMMENT> COMMENTs { get; set; }
+        public virtual ICollection<REPORTED_POSTS> REPORTED_POSTS { get; set; }
     }
 }

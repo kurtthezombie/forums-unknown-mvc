@@ -11,23 +11,14 @@ namespace ForumsUnknown.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
-    public partial class COMMENT
-    {
-        public int CommentID { get; set; }
-
-        [Required]
-        public string Content { get; set; }
-
-        public int AuthorID { get; set; }
-
-        public int PostID { get; set; }
-
-        public System.DateTime CreatedAt { get; set; }
-        public Nullable<System.DateTime> ModifiedAt { get; set; }
     
-        public virtual FORUM_USERS FORUM_USERS { get; set; }
+    public partial class POST_IMAGE
+    {
+        public int ImageID { get; set; }
+        public string AltText { get; set; }
+        public string ImagePath { get; set; }
+        public int PostID { get; set; }
+    
         public virtual FORUM_POSTS FORUM_POSTS { get; set; }
     }
 }

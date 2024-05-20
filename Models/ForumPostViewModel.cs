@@ -13,5 +13,7 @@ namespace ForumsUnknown.Models
         public DateTime? CreatedAt { get; set; }
         public DateTime? ModifiedAt { get; set; }
         public string AuthorName { get; set; }
+        public string ProfilePicPath { get; set; }
+
     }
 }
