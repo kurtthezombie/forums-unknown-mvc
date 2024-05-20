@@ -10,8 +10,23 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/plugin/relativeTime.js"></script>
+    @*<script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/plugin/relativeTime.js"></script>*@
+    <script src="~/Scripts/dayjs.min.js"></script>
+    <script src="~/Scripts/relativeTime.js"></script>
+    <script>
+        dayjs.extend(dayjs_plugin_relativeTime);
+
+        function updateRelativeTimes() {
+            document.querySelectorAll('.created-at').forEach(function (element) {
+                const dateTime = element.getAttribute('data-created-at');
+                const relativeTime = dayjs(dateTime).fromNow();
+                element.innerText = `${relativeTime}`;
+            });
+        }
+
+        window.onload = updateRelativeTimes;
+    </script>
 </head>
 <body>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm bg-transparent mt-3">
@@ -34,7 +49,6 @@
                                 <input type="text" name="searchText" class="form-control bg-dark rounded-start-1 rounded-0 text-light border-0 w-100" required />
                                 <button type="submit" class="btn btn-dark rounded-0 rounded-end-3 border-start border-0 border-secondary">Search</button>
                             }
-
                         </li>
                     }
                     <li>@Html.ActionLink("HOME", "Index", "Home", new { area = "" }, new { @class = "nav-link text-light brawler-regular" })</li>

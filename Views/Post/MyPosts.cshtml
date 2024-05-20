@@ -32,8 +32,8 @@
             <div class="card-body">
                 @item.Content
             </div>
-            <div class="card-footer">
-                Posted on: @item.CreatedAt
+            <div class="created-at card-footer text-secondary" data-created-at="@item.CreatedAt.ToString("o")">
+                
             </div>
 
         </div>
