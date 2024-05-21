@@ -163,6 +163,7 @@
       <DependentUpon>ForumsUnknown.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PostCommentsViewModel.cs" />
+    <Compile Include="Models\PostWithImagesViewModel.cs" />
     <Compile Include="Models\POST_IMAGE.cs">
       <DependentUpon>ForumsUnknown.tt</DependentUpon>
     </Compile>
@@ -286,6 +287,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Images\PostImages\" />
     <Folder Include="Images\ProfileImages\" />
   </ItemGroup>
   <ItemGroup>

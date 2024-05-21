@@ -31,15 +31,16 @@ namespace ForumsUnknown.Controllers
                              CreatedAt = (DateTime)p.CreatedAt,
                              ModifiedAt = (DateTime)p.ModifiedAt,
                              AuthorName = u.UserName,
-                             ProfilePicPath = u.ProfilePicPath 
+                             ProfilePicPath = u.ProfilePicPath,
+                             Images = db.POST_IMAGE
+                                        .Where(img => img.PostID == p.PostID)
+                                        .Select(img => new ImageViewModel
+                                        {
+                                            ImagePath = img.ImagePath,
+                                            AltText = img.AltText
+                                        }).ToList()
                          }).ToList();
-
             return View(posts);
-        }
-
-        public ActionResult RedirectToIndex()
-        {
-            return RedirectToAction("Index");
         }
 
         [Route("About")]

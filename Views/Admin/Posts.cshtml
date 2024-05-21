@@ -82,7 +82,7 @@
             <td>
                 @if (item.PostStatus.ToString() == "pending")
                 {
-                    @Html.ActionLink("Approve","Approve", new { id = item.PostID },htmlAttributes: new { @class = "btn btn-success"})
+                    @Html.ActionLink("Approve","Approve", new { id = item.PostID },htmlAttributes: new { @class = "btn btn-success", onclick = "return confirm('Approve post?')"})
                 }
                 @Html.ActionLink("Details", "DetailsPost", new {  id=item.PostID  }, new { @class = "btn btn-secondary" }) |
                 @Html.ActionLink("Delete", "DeletePost", new {  id=item.PostID }, htmlAttributes: new { @class = "btn btn-danger", onclick = "return confirm('Delete this post?')" })

@@ -40,7 +40,7 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Go Back", "RedirectToIndex", "Home", null, htmlAttributes: new { @class = "btn btn-secondary" }) |
+    @Html.ActionLink("Go Back", "Index", "Home", null, htmlAttributes: new { @class = "btn btn-secondary" }) |
     @Html.ActionLink("Edit", "EditUser", null, new { @class = "btn btn-warning" }) |
     @if (Session["Username"].ToString() != "admin")
     {

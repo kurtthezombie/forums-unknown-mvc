@@ -53,5 +53,5 @@
 </div>
 <p>
     @Html.ActionLink("Back", "Posts", "Admin", null, htmlAttributes: new { @class = "btn btn-outline-light" }) |
-    @Html.ActionLink("Delete", "DeletePost", new { id = Model.PostID }, new { @class = "btn btn-danger" })
+    @Html.ActionLink("Delete", "DeletePost", new { id = Model.PostID }, new { @class = "btn btn-danger" , onclick = "return confirm('Delete post?')"})
 </p>

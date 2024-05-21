@@ -14,6 +14,13 @@ namespace ForumsUnknown.Models
         public DateTime? ModifiedAt { get; set; }
         public string AuthorName { get; set; }
         public string ProfilePicPath { get; set; }
+        public List<ImageViewModel> Images { get; set; }
+    }
+
+    public class ImageViewModel
+    {
+        public string ImagePath { get; set; }
+        public string AltText { get; set; }
 
     }
 }

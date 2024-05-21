@@ -1,4 +1,4 @@
-﻿@model ForumsUnknown.Models.FORUM_POSTS
+﻿@model ForumsUnknown.Models.PostWithImagesViewModel
 
 @{
     ViewBag.Title = "CreatePost";
@@ -9,7 +9,7 @@
     <div class="card col-lg-5 border-light mx-auto bg-transparent p-3">
         <div class="card-header display-6 text-light border-0">Create Post</div>
         <div class="card-body">
-            @using (Html.BeginForm())
+            @using (Html.BeginForm("CreatePost", "Post", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
                 @Html.AntiForgeryToken()
 
@@ -30,7 +30,11 @@
                 </div>
                 <br />
                 <div class="form-group">
-                    @Html.HiddenFor(model => model.AuthorID, new { Value = Session["UserId"] })
+                    <label class="control-label">Images</label>
+                    <input type="file" name="Images" class="form-control" multiple accept="image/*"/>
+                </div>
+                <div class="form-group">
+                    @Html.HiddenFor(model => model.AuthorID, new { Value = (int)Session["UserId"] })
                     <label class="@ViewBag.NotificationColor">@ViewBag.Notification</label>
                 </div>
                 <br />

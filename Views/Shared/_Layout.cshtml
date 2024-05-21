@@ -11,7 +11,7 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @*<script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/plugin/relativeTime.js"></script>*@
+        <script src="https://cdn.jsdelivr.net/npm/dayjs@1/plugin/relativeTime.js"></script>*@
     <script src="~/Scripts/dayjs.min.js"></script>
     <script src="~/Scripts/relativeTime.js"></script>
     <script>
@@ -26,6 +26,12 @@
         }
 
         window.onload = updateRelativeTimes;
+    </script>
+    <script>
+        $document.ready(function () {
+            $('.carousel').carousel();
+        })
+
     </script>
 </head>
 <body>

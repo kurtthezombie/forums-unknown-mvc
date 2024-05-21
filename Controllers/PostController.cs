@@ -1,6 +1,7 @@
 ﻿using ForumsUnknown.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -32,30 +33,89 @@ namespace ForumsUnknown.Controllers
         [HttpPost]
         [Route("CreatePost")]
         [ValidateAntiForgeryToken]
-        public ActionResult CreatePost(FORUM_POSTS post)
+        public ActionResult CreatePost(PostWithImagesViewModel viewModel)
         {
-            if (ModelState.IsValid)
+            if(ModelState.IsValid)
             {
-                //set getdate
-                post.PostStatus = "pending";
-                post.CreatedAt = DateTime.Now;
-                post.ModifiedAt = DateTime.Now;
-                //query the insertion
-                db.FORUM_POSTS.Add(post);
-                db.SaveChanges();
-                //notification messages
-                ViewBag.Notification = "Successfully posted.";
-                ViewBag.NotificationColor = "text-success";
-                //clear textfields
-                ModelState.Clear();
+                var post = new FORUM_POSTS
+                {
+                    AuthorID = viewModel.AuthorID,
+                    Title = viewModel.Title,
+                    Content = viewModel.Content,
+                    PostStatus = "pending",
+                    CreatedAt = DateTime.Now,
+                    ModifiedAt = DateTime.Now,
+                    POST_IMAGE = new List<POST_IMAGE>()
+                };
 
-                return View(new FORUM_POSTS());
-            } 
-            else
-            {
-                return View(post);
+                using (var db = new FuDBContext())
+                {
+                    db.FORUM_POSTS.Add(post);
+                    db.SaveChanges();
+
+
+                    if (viewModel.Images != null && viewModel.Images.Count > 0)
+                    {
+                        foreach (var file in viewModel.Images)
+                        {
+                            if (file != null && file.ContentLength > 0)
+                            {
+                                //set unique file name
+                                string fileName = Path.GetFileNameWithoutExtension(file.FileName)
+                                    + DateTime.Now.ToString("yyyyMMdd_mmssff")
+                                    + Path.GetExtension(file.FileName);
+
+                                string filePath = "../Images/PostImages/" + fileName;
+
+                                //save file to server
+                                var path = Path.Combine(Server.MapPath("~/Images/PostImages/"), fileName);
+                                file.SaveAs(path);
+
+                                post.POST_IMAGE.Add(new POST_IMAGE
+                                {
+                                    AltText = Path.GetFileNameWithoutExtension(file.FileName),
+                                    ImagePath = filePath,
+                                    PostID = post.PostID
+                                });
+                            }
+                        }
+                    }
+                    db.SaveChanges();
+                }
+                
+                return RedirectToAction("Index", "Home");
             }
+
+            return View(viewModel);
         }
+
+        //[HttpPost]
+        //[Route("CreatePost")]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult CreatePost(FORUM_POSTS post)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        //set getdate
+        //        post.PostStatus = "pending";
+        //        post.CreatedAt = DateTime.Now;
+        //        post.ModifiedAt = DateTime.Now;
+        //        //query the insertion
+        //        db.FORUM_POSTS.Add(post);
+        //        db.SaveChanges();
+        //        //notification messages
+        //        ViewBag.Notification = "Successfully posted.";
+        //        ViewBag.NotificationColor = "text-success";
+        //        //clear textfields
+        //        ModelState.Clear();
+
+        //        return View(new FORUM_POSTS());
+        //    } 
+        //    else
+        //    {
+        //        return View(post);
+        //    }
+        //}
 
         [HttpGet]
         [Route("EditPost")]
@@ -112,10 +172,16 @@ namespace ForumsUnknown.Controllers
 
             //delete comments first before the post
             var comments = db.COMMENT.Where(c => c.PostID == id).ToList();
-
+            
             if(comments.Any())
             {
                 db.COMMENT.RemoveRange(comments);
+            }
+
+            var postImages = db.POST_IMAGE.Where(i => i.PostID == id).ToList();
+            if (postImages.Any())
+            {
+                db.POST_IMAGE.RemoveRange(postImages);
             }
 
             //delete posts then
@@ -146,10 +212,14 @@ namespace ForumsUnknown.Controllers
                             Title = p.Title,
                             Content = p.Content,
                             CreatedAt = (DateTime)p.CreatedAt,
-                            AuthorName = u.UserName
+                            AuthorName = u.UserName,
+                            Images = p.POST_IMAGE.Select(i => new ImageViewModel
+                            {
+                                ImagePath = i.ImagePath,
+                                AltText = i.AltText
+                            }).ToList()
                         }).FirstOrDefault();
             //query comments
-            //var comments = db.COMMENT.Where(c => c.PostID == id).ToList();
             var comments = (from c in db.COMMENT
                             join u in db.FORUM_USERS on c.AuthorID equals u.UserID
                             where c.PostID == postId
@@ -164,18 +234,17 @@ namespace ForumsUnknown.Controllers
                                 CreatedAt = c.CreatedAt,
                                 ModifiedAt = c.ModifiedAt
                             }).ToList();
-            ;
 
             //create new PCVM instance
-            var PostCommentsVM = new PostCommentsViewModel();
+            var PostCommentsVM = new PostCommentsViewModel
+            {
+                //map post to forum post
+                ForumPost = post,
+                Comments = comments
+            };
 
-            //map post to forum post
-            PostCommentsVM.ForumPost = post;
 
-            PostCommentsVM.Comments = comments;
-
-            ViewBag.CommentCount = db.COMMENT.Where(c => c.PostID == id).Count();
-
+            ViewBag.CommentCount = db.COMMENT.Count(c => c.PostID == id);
 
             return View(PostCommentsVM);
         }

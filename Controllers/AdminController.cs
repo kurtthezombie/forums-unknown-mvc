@@ -225,7 +225,11 @@ namespace ForumsUnknown.Controllers
         public ActionResult CreatePost(FORUM_POSTS post) {
             if (ModelState.IsValid)
             {
+                //set values to these necessary data
                 post.CreatedAt = DateTime.Now;
+                post.ModifiedAt = DateTime.Now;
+                post.PostStatus = "approved";
+
                 db.FORUM_POSTS.Add(post);
                 db.SaveChanges();
 
