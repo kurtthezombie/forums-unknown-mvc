@@ -16,10 +16,12 @@ namespace ForumsUnknown.Controllers
     {
         private FuDBContext db = new FuDBContext();
 
+        //GET 
         public ActionResult Index()
         {
             var posts = (from p in db.FORUM_POSTS
                          join u in db.FORUM_USERS on p.AuthorID equals u.UserID
+                         where p.PostStatus == "approved"
                          orderby p.CreatedAt descending
                          select new ForumPostViewModel
                          {

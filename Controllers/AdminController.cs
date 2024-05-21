@@ -240,7 +240,7 @@ namespace ForumsUnknown.Controllers
                 return View(post);
             }
         }
-        public ActionResult Posts()
+        public ActionResult Posts(string statusFilter)
         {
             
             if (Session["Username"] != null)
@@ -252,8 +252,16 @@ namespace ForumsUnknown.Controllers
                 }
                 else
                 {
-                    var posts = db.FORUM_POSTS.ToList();
-                    return View(posts);
+                    //var posts = db.FORUM_POSTS.ToList();
+
+                    var posts = db.FORUM_POSTS.AsQueryable();
+
+                    if (!string.IsNullOrEmpty(statusFilter))
+                    {
+                        posts = posts.Where(p => p.PostStatus == statusFilter);
+                    }
+
+                    return View(posts.ToList());
                 }
             }
             else
@@ -280,6 +288,19 @@ namespace ForumsUnknown.Controllers
             postController.Delete(id);
 
             return RedirectToAction("Posts");
+        }
+
+        public ActionResult Approve(int id)
+        {
+            var post = db.FORUM_POSTS.FirstOrDefault(p => p.PostID == id);
+
+            if (post != null)
+            {
+                post.PostStatus = "approved";
+                db.SaveChanges();
+            }
+
+            return RedirectToAction("Posts", "Admin");
         }
         #endregion
 

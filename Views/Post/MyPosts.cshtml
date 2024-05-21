@@ -27,6 +27,10 @@
                 </ul>
             </div>
             <div class="card-header border-light">
+                @if (item.PostStatus == "pending")
+                {
+                    <p class="w-25"><span class="bg-warning text-dark px-2 p-1">Pending</span></p>
+                }
                 <div class="card-title display-5 fw-normal">@item.Title</div>
             </div>
             <div class="card-body">
