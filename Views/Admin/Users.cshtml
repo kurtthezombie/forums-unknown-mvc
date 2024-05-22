@@ -12,6 +12,13 @@
     <a href="@Url.Action("CreateUser", "Admin")" class="btn btn-outline-primary">+Create New</a>
 </div>
 
+<form method="get" action="@Url.Action("Users","Admin")" class="mt-2">
+    <div class="form-group d-flex col-md-8">
+        <input type="text" name="searchString" value="@ViewBag.CurrentFilter" class="form-control w-25 bg-transparent border-0 border-bottom border-1 border-light rounded-0 text-light" placeholder="Search by username or email"/>
+        <button type="submit" class="btn btn-primary mx-2">Search</button>
+    </div>
+</form>
+
 <table class="table text-white">
     <tr>
         <th>
@@ -58,7 +65,6 @@
                     @Html.ActionLink("Delete", "DeleteUser", new { id = item.UserID }, new { @class = "btn btn-danger", onclick = "return confirm('Delete this user?')" })
                 }
             </td>
-
         </tr>
     }
 

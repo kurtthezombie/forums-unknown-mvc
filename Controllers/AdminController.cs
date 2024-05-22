@@ -194,7 +194,7 @@ namespace ForumsUnknown.Controllers
             }
         }
 
-        public ActionResult Users()
+        public ActionResult Users(string searchString)
         {
             if (Session["Username"] != null)
             {
@@ -205,8 +205,15 @@ namespace ForumsUnknown.Controllers
                 } 
                 else
                 {
-                    var users = db.FORUM_USERS.ToList();
-                    return View(users);
+                    var users = db.FORUM_USERS.AsQueryable();
+
+                    if (!String.IsNullOrEmpty(searchString))
+                    {
+                        users = users.Where(u => u.UserName.Contains(searchString) || u.EmailAddress.Contains(searchString));
+                    }
+
+                    ViewBag.CurrentFilter = searchString;
+                    return View(users.ToList());
                 }
             }
             else
