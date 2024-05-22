@@ -150,26 +150,29 @@ namespace ForumsUnknown.Controllers
 
         public ActionResult DeleteUser(int id)
         {
-            var data = db.FORUM_USERS.Find(id);
+            //var data = db.FORUM_USERS.Find(id);
 
-            if (data == null)
-            {
-                return HttpNotFound();
-            }
-            else
-            {
-                //delete comments first
-                var comments = db.COMMENT.Where(x => x.AuthorID == id);
-                db.COMMENT.RemoveRange(comments);
+            //if (data == null)
+            //{
+            //    return HttpNotFound();
+            //}
+            //else
+            //{
+            //    //delete comments first
+            //    var comments = db.COMMENT.Where(x => x.AuthorID == id);
+            //    db.COMMENT.RemoveRange(comments);
 
-                //delete posts of user before deleting user
-                var posts = db.FORUM_POSTS.Where(x => x.AuthorID == id);
-                db.FORUM_POSTS.RemoveRange(posts);
+            //    //delete posts of user before deleting user
+            //    var posts = db.FORUM_POSTS.Where(x => x.AuthorID == id);
+            //    db.FORUM_POSTS.RemoveRange(posts);
 
-                //remove the user
-                db.FORUM_USERS.Remove(data);
-                db.SaveChanges();
-            }
+
+            //    //remove the user
+            //    db.FORUM_USERS.Remove(data);
+            //    db.SaveChanges();
+            //}
+            var userController = new UserController();
+            userController.Delete(id);
 
             return RedirectToAction("Users");
         }
@@ -274,9 +277,25 @@ namespace ForumsUnknown.Controllers
             }
         }
         
-        public ActionResult DetailsPost(int? id)
+        public ActionResult DetailsPost(int id)
         {
-            FORUM_POSTS post = db.FORUM_POSTS.Find(id);
+            //FORUM_POSTS post = db.FORUM_POSTS.Find(id);
+            var post = (from p in db.FORUM_POSTS
+                        join u in db.FORUM_USERS on p.AuthorID equals u.UserID
+                        where p.PostID == id // Filter by post ID
+                        select new ForumPostViewModel
+                        {
+                            PostID = p.PostID,
+                            Title = p.Title,
+                            Content = p.Content,
+                            CreatedAt = (DateTime)p.CreatedAt,
+                            AuthorName = u.UserName,
+                            Images = p.POST_IMAGE.Select(i => new ImageViewModel
+                            {
+                                ImagePath = i.ImagePath,
+                                AltText = i.AltText
+                            }).ToList()
+                        }).FirstOrDefault();
 
             if (post == null)
             {

@@ -1,4 +1,5 @@
 ﻿using ForumsUnknown.Models;
+using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
@@ -218,11 +219,33 @@ namespace ForumsUnknown.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public void Delete(int? id)
+        public void Delete(int userId)
         {
-            var data = db.FORUM_USERS.Find(id);
+            //retrieve user
+            var user = db.FORUM_USERS.Find(userId);
 
-            db.FORUM_USERS.Remove(data);
+            //retrieve posts
+            var posts = db.FORUM_POSTS.Where(p => p.AuthorID == userId).ToList();
+            
+            //delete comments in every post of author
+            foreach (var post in posts)
+            {
+                db.COMMENT.Where(c => c.PostID == post.PostID).ForEach(c => db.COMMENT.Remove(c));
+            }
+            
+            //delete comments made by author
+            db.COMMENT.Where(c => c.AuthorID == userId).ForEach(c => db.COMMENT.Remove(c));
+
+            //remove images associated with posts
+            foreach (var post in posts)
+            {
+                db.POST_IMAGE.Where(img => img.PostID == post.PostID).ForEach(img => db.POST_IMAGE.Remove(img));
+            }
+            //delete posts
+            db.FORUM_POSTS.Where(p => p.AuthorID == userId).ForEach(p => db.FORUM_POSTS.Remove(p));
+            
+            //delete user
+            db.FORUM_USERS.Remove(user);
             db.SaveChanges();
         }
 

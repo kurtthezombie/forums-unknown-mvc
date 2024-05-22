@@ -1,4 +1,4 @@
-﻿@model ForumsUnknown.Models.FORUM_POSTS
+﻿@model ForumsUnknown.Models.ForumPostViewModel
 
 @{
     ViewBag.Title = "DetailsPost";
@@ -8,6 +8,43 @@
 
 <div>
     <hr />
+    @if (Model.Images != null && Model.Images.Any())
+    {
+        <div class="col-sm-4 h-25">
+            <div id="carouselExampleControls" class="carousel slide" data-bs-interval="false">
+                <div class="carousel-inner">
+                    @{ int count = 0; }
+                    @foreach (var image in Model.Images)
+                    {
+                        if (count == 0)
+                        {
+                            <div class="carousel-item active">
+                                <img src="../@image.ImagePath" class="d-block w-100 img-fluid" alt="@image.AltText" height="50">
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="carousel-item">
+                                <img src="../@image.ImagePath" class="d-block w-100 img-fluid" alt="@image.AltText" height="50">
+                            </div>
+                        }
+                        count++;
+                    }
+                </div>
+                @if (Model.Images.Count > 1)
+                {
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                }
+            </div>
+        </div>
+    }
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.PostID)
@@ -42,11 +79,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.AuthorID)
+            @Html.DisplayNameFor(model => model.AuthorName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.AuthorID)
+            @Html.DisplayFor(model => model.AuthorName)
         </dd>
 
     </dl>

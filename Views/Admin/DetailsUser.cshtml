@@ -10,6 +10,10 @@
     <h2 class="display-2">@Model.UserName</h2>
     <hr />
     <dl class="dl-horizontal">
+        @if (Model.ProfilePicPath != null)
+        {
+            <img src="../@Model.ProfilePicPath" alt="ProfilePicture" class="rounded-circle border-3 border border-light" height="150" />
+        }
         <dt>
             @Html.DisplayNameFor(model => model.UserID)
         </dt>
@@ -17,15 +21,6 @@
         <dd>
             @Html.DisplayFor(model => model.UserID)
         </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.UserName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.UserName)
-        </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.EmailAddress)
         </dt>

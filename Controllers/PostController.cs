@@ -311,27 +311,6 @@ namespace ForumsUnknown.Controllers
             }
 
             return View(posts);
-
-            //no toLower
-            //var posts = (from p in db.FORUM_POSTS
-            //             join u in db.FORUM_USERS on p.AuthorID equals u.UserID
-            //             where (p.Title.Contains(searchText) || p.Content.Contains(searchText))
-            //             orderby p.CreatedAt descending
-            //             select new ForumPostViewModel
-            //             {
-            //                 PostID = p.PostID,
-            //                 Title = p.Title,
-            //                 Content = p.Content,
-            //                 CreatedAt = (DateTime)p.CreatedAt,
-            //                 ModifiedAt = (DateTime)p.ModifiedAt,
-            //                 AuthorName = u.UserName
-            //             }).ToList();
-            //if (posts.Count == 0)
-            //{
-            //    return View(new List<ForumPostViewModel>());
-            //}
-
-            //return View(posts);
         }
     }
 }
