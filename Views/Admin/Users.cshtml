@@ -13,59 +13,74 @@
 </div>
 
 <form method="get" action="@Url.Action("Users","Admin")" class="mt-2">
-    <div class="form-group d-flex col-md-8">
-        <input type="text" name="searchString" value="@ViewBag.CurrentFilter" class="form-control w-25 bg-transparent border-0 border-bottom border-1 border-light rounded-0 text-light" placeholder="Search by username or email"/>
+    <div class="form-group d-flex col-md-5">
+        <input type="text" name="searchString" value="@ViewBag.CurrentFilter" class="form-control w-50 bg-transparent border-0 border-bottom border-1 border-light rounded-0 text-light" placeholder="Search by username or email" required />
         <button type="submit" class="btn btn-primary mx-2">Search</button>
     </div>
 </form>
 
-<table class="table text-white">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.UserID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UserName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EmailAddress)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreatedAt)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ModifiedAt)
-        </th>
-        <th>Actions</th>
-    </tr>
+@* Display the search results count*@
+@if (!string.IsNullOrEmpty(ViewBag.CurrentFilter))
+{
+    <h2>Search results: @ViewBag.ResultsCount found</h2>
+}
 
-    @foreach (var item in Model)
-    {
+@if (!Model.Any())
+{
+    <h2>No posts found</h2>
+}
+else
+{
+    <table class="table text-white">
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserID, new { })
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EmailAddress)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedAt)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModifiedAt)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "EditUser", new { id = item.UserID }, new { @class = "btn btn-primary" }) |
-                @Html.ActionLink("Details", "DetailsUser", new { id = item.UserID }, new { @class = "btn btn-secondary" }) |
-                @if (item.UserID != 1)
-                {
-                    @Html.ActionLink("Delete", "DeleteUser", new { id = item.UserID }, new { @class = "btn btn-danger", onclick = "return confirm('Delete this user?')" })
-                }
-            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.UserID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmailAddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ModifiedAt)
+            </th>
+            <th>Actions</th>
         </tr>
-    }
 
-</table>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserID, new { })
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmailAddress)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedAt)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ModifiedAt)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "EditUser", new { id = item.UserID }, new { @class = "btn btn-primary" }) |
+                    @Html.ActionLink("Details", "DetailsUser", new { id = item.UserID }, new { @class = "btn btn-secondary" }) |
+                    @if (item.UserID != 1)
+                    {
+                        @Html.ActionLink("Delete", "DeleteUser", new { id = item.UserID }, new { @class = "btn btn-danger", onclick = "return confirm('Delete this user?')" })
+                    }
+                </td>
+            </tr>
+        }
+
+    </table>
+}
+
+

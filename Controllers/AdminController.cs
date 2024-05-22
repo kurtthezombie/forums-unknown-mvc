@@ -209,10 +209,12 @@ namespace ForumsUnknown.Controllers
 
                     if (!String.IsNullOrEmpty(searchString))
                     {
+                        searchString = searchString.Replace(" ", "");
                         users = users.Where(u => u.UserName.Contains(searchString) || u.EmailAddress.Contains(searchString));
                     }
 
                     ViewBag.CurrentFilter = searchString;
+                    ViewBag.ResultsCount = users.Count();
                     return View(users.ToList());
                 }
             }
@@ -254,9 +256,8 @@ namespace ForumsUnknown.Controllers
                 return View(post);
             }
         }
-        public ActionResult Posts(string statusFilter)
+        public ActionResult Posts(string statusFilter, string searchString)
         {
-            
             if (Session["Username"] != null)
             {
                 string username = Session["Username"].ToString();
@@ -266,8 +267,6 @@ namespace ForumsUnknown.Controllers
                 }
                 else
                 {
-                    //var posts = db.FORUM_POSTS.ToList();
-
                     var posts = db.FORUM_POSTS.AsQueryable();
 
                     if (!string.IsNullOrEmpty(statusFilter))
@@ -275,6 +274,14 @@ namespace ForumsUnknown.Controllers
                         posts = posts.Where(p => p.PostStatus == statusFilter);
                     }
 
+                    if (!string.IsNullOrEmpty(searchString))
+                    {
+                        posts = posts.Where(p => p.Title.Contains(searchString) || p.Content.Contains(searchString));
+                    }
+                    
+                    ViewBag.CurrentFilter = searchString;
+                    ViewBag.CurrentStatusFilter = statusFilter;
+                    ViewBag.ResultsCount = posts.Count();
                     return View(posts.ToList());
                 }
             }

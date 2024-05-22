@@ -2,11 +2,11 @@
 
 @{
     ViewBag.Title = "Posts";
-    
+
 }
 
 <h2>Posts</h2>
-@Html.ActionLink("GO BACK", "AdminPage", "Admin", null,htmlAttributes: new { @class = "btn btn-secondary" })
+@Html.ActionLink("GO BACK", "AdminPage", "Admin", null, htmlAttributes: new { @class = "btn btn-secondary" })
 @Html.ActionLink("USERS", "Users", "Admin", null, htmlAttributes: new { @class = "btn btn-outline-light" })
 
 <div class="mt-2">
@@ -19,75 +19,100 @@
     <a href="@Url.Action("Posts", "Admin")" class="btn btn-outline-info">All</a>
 </div>
 
+@* Form for search *@
+<form method="get" action="@Url.Action("Posts","Admin")" class="mt-2">
+    <input type="hidden" name="statusFilter" value="@ViewBag.CurrentStatusFilter" />
+    <div class="form-group">
+        <div class="form-group d-flex col-md-5">
+            <input type="text" name="searchString" value="@ViewBag.CurrentFilter" class="form-control w-50 bg-transparent border-0 border-bottom border-1 border-light rounded-0 text-light" placeholder="Search by title or content" required />
+            <button type="submit" class="btn btn-primary mx-2">Search</button>
+        </div>
+    </div>
+</form>
+<br />
+@* Retrieve the status class *@
 @functions {
-    public string GetStatusClass (string status)
+    public string GetStatusClass(string status)
     {
         return status == "pending" ? "text-warning" : "text-success";
     }
 }
 
+@* Display the search results count*@
+@if (!string.IsNullOrEmpty(ViewBag.CurrentFilter))
+{
+    <h2>Search results: @ViewBag.ResultsCount found</h2>
+}
 
-<table class="table text-white">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.PostID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Content)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreatedAt)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ModifiedAt)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AuthorID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PostStatus)
-        </th>
-        <th>Actions</th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
+@* Generate the table *@
+@if (!Model.Any())
+{
+    <h2>No posts found</h2>
+}
+else
+{
+    <table class="table text-white">
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.PostID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Content)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedAt)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModifiedAt)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AuthorID)
-            </td>
-            <td>
-                <span class="@GetStatusClass(item.PostStatus.ToString())">
-                    @Html.DisplayFor(modelItem => item.PostStatus)
-                </span>
-            </td>
-            <td>
-                @if (item.PostStatus.ToString() == "pending")
-                {
-                    @Html.ActionLink("Approve","Approve", new { id = item.PostID },htmlAttributes: new { @class = "btn btn-success", onclick = "return confirm('Approve post?')"})
-                }
-                @Html.ActionLink("Details", "DetailsPost", new {  id=item.PostID  }, new { @class = "btn btn-secondary" }) |
-                @Html.ActionLink("Delete", "DeletePost", new {  id=item.PostID }, htmlAttributes: new { @class = "btn btn-danger", onclick = "return confirm('Delete this post?')" })
-            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.PostID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Content)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ModifiedAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AuthorID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PostStatus)
+            </th>
+            <th>Actions</th>
         </tr>
-    }
 
-</table>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PostID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Content)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedAt)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ModifiedAt)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AuthorID)
+                </td>
+                <td>
+                    <span class="@GetStatusClass(item.PostStatus.ToString())">
+                        @Html.DisplayFor(modelItem => item.PostStatus)
+                    </span>
+                </td>
+                <td>
+                    @if (item.PostStatus.ToString() == "pending")
+                    {
+                        @Html.ActionLink("Approve", "Approve", new { id = item.PostID }, htmlAttributes: new { @class = "btn btn-success", onclick = "return confirm('Approve post?')" })
+                    }
+                    @Html.ActionLink("Details", "DetailsPost", new { id = item.PostID }, new { @class = "btn btn-secondary" }) |
+                    @Html.ActionLink("Delete", "DeletePost", new { id = item.PostID }, htmlAttributes: new { @class = "btn btn-danger", onclick = "return confirm('Delete this post?')" })
+                </td>
+            </tr>
+        }
+    </table>
+}
+
