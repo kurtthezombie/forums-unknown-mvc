@@ -270,15 +270,19 @@ namespace ForumsUnknown.Controllers
         [Route("EditProfile")]
         public ActionResult EditUser(FORUM_USERS user)
         {
-            //create unique name for file
-            
-            string fileName = Path.GetFileNameWithoutExtension(user.ImageFile.FileName)
-                + DateTime.Now.ToString("yyyyMMdd_mmssfff")
-                + Path.GetExtension(user.ImageFile.FileName);
-            
-            //set image path for database
-            
-            user.ProfilePicPath = "../Images/ProfileImages/" + fileName;
+            string fileName = string.Empty;
+            //check if file is empty
+            bool withImage = user.ImageFile != null && user.ImageFile.ContentLength > 0;
+
+            if (withImage)
+            {
+                //create unique name for file
+                fileName = Path.GetFileNameWithoutExtension(user.ImageFile.FileName)
+                    + DateTime.Now.ToString("yyyyMMdd_mmssfff")
+                    + Path.GetExtension(user.ImageFile.FileName);
+                //set image path for database
+                user.ProfilePicPath = "../Images/ProfileImages/" + fileName;
+            }
 
             if (ModelState.IsValid)
             {
@@ -293,15 +297,24 @@ namespace ForumsUnknown.Controllers
                     
                     if (data != null)
                     {
-                        //set filename for the image to be saved locally
-                        fileName = Path.Combine(Server.MapPath("~/Images/ProfileImages/"), fileName);
+                        if (withImage)
+                        {
+                            //set filename for the image to be saved locally
+                            fileName = Path.Combine(Server.MapPath("~/Images/ProfileImages/"), fileName);
+                            //save image
+                            user.ImageFile.SaveAs(fileName);
+                        }
 
-                        //save image
-                        user.ImageFile.SaveAs(fileName);
-
+                        
+                        //set edited data
                         data.UserName = user.UserName;
                         data.EmailAddress = user.EmailAddress;
-                        data.ProfilePicPath = user.ProfilePicPath; //save the path in database
+
+                        if (withImage)
+                        {
+                            data.ProfilePicPath = user.ProfilePicPath; //save the path in database
+                        }
+
                         data.UserPassword = user.UserPassword;
                         data.ConfirmPassword = user.ConfirmPassword;
                         data.ModifiedAt = DateTime.Now;

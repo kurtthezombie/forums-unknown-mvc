@@ -88,7 +88,7 @@
                             }
                             @if (item.Images != null && item.Images.Count > 0)
                             {
-                                <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+                                <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel" data-bs-interval="4000">
                                     @if (item.Images.Count > 1)
                                     {
                                         <div class="carousel-indicators">
@@ -120,7 +120,7 @@
                                             if (count == 0)
                                             {
                                                 <div class="carousel-item active">
-                                                    <img src="@image.ImagePath" class="d-block w-100 img-fluid" alt="@image.AltText">
+                                                        <img src="@image.ImagePath" class="d-block w-100 img-fluid" alt="@image.AltText">
                                                 </div>
                                             }
                                             else
