@@ -10,9 +10,14 @@
         </p>
         <div class="card bg-transparent mt-1 text-light">
             <h1 class="card-title display-2">@Model.ForumPost.Title</h1>
+            @if (Model.ForumPost.ModifiedAt != Model.ForumPost.CreatedAt)
+            {
+                <p class="w-25"><span class="bg-secondary text-light px-2">Edited</span></p>
+            }
             <h5 class="card-subtitle text-secondary">by <a href="@Url.Action("ViewProfile","User", new {username = Model.ForumPost.AuthorName})" class="text-decoration-none"><span class="text-danger">@Model.ForumPost.AuthorName</span></a></h5>
             <hr class="w-25" />
             <div class="card-body">
+
                 @if (Model.ForumPost.Images != null && Model.ForumPost.Images.Any())
                 {
                     <div class="col-sm-4 h-25">
@@ -49,7 +54,7 @@
                             }
                         </div>
                     </div>
-                    
+
                 }
                 <br />
                 <h4>@Model.ForumPost.Content</h4>
@@ -93,7 +98,7 @@
                                 <a class="text-danger mb-0 text-decoration-none" href="@Url.Action("ViewProfile","User", new { username = author})">
                                     @if (comment.ProfilePicPath != null)
                                     {
-                                        <img src="@comment.ProfilePicPath" style="width: 30px;height: 30px; overflow:hidden; object-fit: cover;" class="rounded-circle"/>
+                                        <img src="@comment.ProfilePicPath" style="width: 30px;height: 30px; overflow:hidden; object-fit: cover;" class="rounded-circle" />
                                     }
                                     @author
                                 </a>
