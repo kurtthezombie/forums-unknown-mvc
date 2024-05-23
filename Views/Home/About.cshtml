@@ -2,8 +2,31 @@
     ViewBag.Title = "About";
 }
 <main aria-labelledby="title">
-    <h2 id="title">@ViewBag.Title.</h2>
-    <h3>@ViewBag.Message</h3>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2">
+                <h1 class="mb-4 text-center text-highlight">About ForumsUnknown</h1>
+                <p>Welcome to <strong>ForumsUnknown</strong>, the ultimate destination for all things eerie, creepy, and downright strange. If you have a fascination with the unexplained, the bizarre, and the spine-chilling, you've found your new home. Our community thrives on the weird and wonderful stories that blur the line between reality and the unknown.</p>
 
-    <p>Use this area to provide additional information.</p>
+                <h2 class="mt-4 text-highlight">What We Do</h2>
+                <p>ForumsUnknown is a platform where users can share their most unsettling experiences, creepy encounters, and bizarre tales. Inspired by the legendary r/nosleep subreddit, our forum is a place for both writers and readers who are drawn to the darker side of storytelling. Whether it's a true story that defies explanation, a piece of horror fiction, or an odd phenomenon that you just can't shake, we want to hear about it.</p>
+
+                <h2 class="mt-4 text-highlight">Join Our Community</h2>
+                <p>Dive into a world of eerie narratives and connect with like-minded individuals who appreciate the thrill of a good scare. At ForumsUnknown, you can:</p>
+                <ul>
+                    <li><strong>Share Your Stories:</strong> Post your own creepy, weird, or mysterious stories and engage with an audience that shares your passion for the macabre.</li>
+                    <li><strong>Discover New Tales:</strong> Read stories from other users that will keep you up at night and make you question what you thought you knew.</li>
+                    <li><strong>Engage and Discuss:</strong> Join discussions, leave comments, and interact with other members of our community who are just as intrigued by the unknown as you are.</li>
+                </ul>
+
+                <h2 class="mt-4 text-highlight">Why ForumsUnknown?</h2>
+                <p>In a world full of the ordinary and predictable, ForumsUnknown offers a refuge for those who seek the extraordinary and the inexplicable. Our goal is to build a community where the eerie and strange are celebrated, and where every new story adds another layer to the tapestry of the unknown.</p>
+
+                <p>So, whether you're here to share your own experiences or to read the chilling accounts of others, we're glad to have you with us. Embrace the unknown, and let's explore the eerie together at <strong>ForumsUnknown</strong>.</p>
+            </div>
+        </div>
+    </div>
+    <div class="text-center mx-auto col-md-5">
+        <a class="btn btn-outline-light w-100" href="@Url.Action("Register","User")">Join Us</a>
+    </div>
 </main>
