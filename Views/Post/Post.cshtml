@@ -10,7 +10,7 @@
         </p>
         <div class="card bg-transparent mt-1 text-light">
             <h1 class="card-title display-2">@Model.ForumPost.Title</h1>
-            <h5 class="card-subtitle text-secondary">by <span class="text-danger">@Model.ForumPost.AuthorName</span></h5>
+            <h5 class="card-subtitle text-secondary">by <a href="@Url.Action("ViewProfile","User", new {username = Model.ForumPost.AuthorName})" class="text-decoration-none"><span class="text-danger">@Model.ForumPost.AuthorName</span></a></h5>
             <hr class="w-25" />
             <div class="card-body">
                 @if (Model.ForumPost.Images != null && Model.ForumPost.Images.Any())

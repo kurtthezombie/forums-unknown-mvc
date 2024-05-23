@@ -55,7 +55,7 @@ namespace ForumsUnknown.Models
         [DataType(DataType.Password)]
         [NotMapped]
         public string ConfirmPassword { get; set; }
-
+        [DisplayName("Created On")]
         public System.DateTime CreatedAt { get; set; }
         public Nullable<System.DateTime> ModifiedAt { get; set; }
     

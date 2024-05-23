@@ -15,9 +15,11 @@
     <hr />
     @if (Model.User.ProfilePicPath != null)
     {
-        <img src="@Model.User.ProfilePicPath" alt="ProfilePicture" class="rounded-circle border-3 border border-light" height="150" />
+        <div style="width: 150px;height:150px;overflow:hidden;">
+            <img src="@Model.User.ProfilePicPath" alt="ProfilePicture" class="img-fluid rounded-circle border-3 border border-light" style="width: 100%; height:100%; object-fit: cover;" />
+        </div>
     }
-    <br /><br />
+    <br />
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.User.EmailAddress)
@@ -44,7 +46,7 @@ else
 {
     foreach (var post in Model.Posts)
     {
-        <div class="card bg-transparent border-1 border-light">
+        <div class="card bg-transparent border-1 border-light custom-highlight" data-id="@post.PostID">
             <div class="card-body">
                 <h3>
                     @post.Title
@@ -60,4 +62,16 @@ else
 
     }
 }
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var cards = document.querySelectorAll(".card");
+
+        cards.forEach(function (card) {
+            card.addEventListener("click", function () {
+                var postId = this.getAttribute("data-id");
+                window.location.href = '/Post/' + postId;
+            });
+        });
+    });
+</script>
 
