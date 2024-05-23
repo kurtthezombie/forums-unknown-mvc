@@ -212,6 +212,7 @@ namespace ForumsUnknown.Controllers
                             Title = p.Title,
                             Content = p.Content,
                             CreatedAt = (DateTime)p.CreatedAt,
+                            ModifiedAt = (DateTime)p.ModifiedAt,
                             AuthorName = u.UserName,
                             Images = p.POST_IMAGE.Select(i => new ImageViewModel
                             {
