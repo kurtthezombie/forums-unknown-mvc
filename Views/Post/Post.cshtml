@@ -93,7 +93,7 @@
                                 <a class="text-danger mb-0 text-decoration-none" href="@Url.Action("ViewProfile","User", new { username = author})">
                                     @if (comment.ProfilePicPath != null)
                                     {
-                                        <img src="@comment.ProfilePicPath" height="30" class="rounded-circle"/>
+                                        <img src="@comment.ProfilePicPath" style="width: 30px;height: 30px; overflow:hidden; object-fit: cover;" class="rounded-circle"/>
                                     }
                                     @author
                                 </a>

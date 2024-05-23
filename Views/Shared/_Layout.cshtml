@@ -76,7 +76,7 @@
                                 <button class="btn dropdown-toggle text-light" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     @if (Session["ProfilePic"] != null)
                                     {
-                                        <img src="@Session["ProfilePic"]" width="30" class="rounded-circle border border-3 border-light" />
+                                        <img src="@Session["ProfilePic"]" class="rounded-circle border border-3 border-light" style="height:30px;width:30px;overflow:hidden;"/>
                                     }
                                     Welcome, <span class="text-danger">@Session["Username"]</span>
                                 </button>

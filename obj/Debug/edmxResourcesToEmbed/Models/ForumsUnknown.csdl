@@ -1,0 +1,174 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ForumsUnknownModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="COMMENT">
+    <Key>
+      <PropertyRef Name="CommentID" />
+    </Key>
+    <Property Name="CommentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="AuthorID" Type="Int32" Nullable="false" />
+    <Property Name="PostID" Type="Int32" Nullable="false" />
+    <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModifiedAt" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="FORUM_USERS" Relationship="Self.FK__COMMENT__AuthorI__778AC167" FromRole="COMMENT" ToRole="FORUM_USERS" />
+    <NavigationProperty Name="FORUM_POSTS" Relationship="Self.FK__COMMENT__PostID__787EE5A0" FromRole="COMMENT" ToRole="FORUM_POSTS" />
+  </EntityType>
+  <EntityType Name="FORUM_POSTS">
+    <Key>
+      <PropertyRef Name="PostID" />
+    </Key>
+    <Property Name="PostID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PostStatus" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModifiedAt" Type="DateTime" Precision="3" />
+    <Property Name="AuthorID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="COMMENTs" Relationship="Self.FK__COMMENT__PostID__787EE5A0" FromRole="FORUM_POSTS" ToRole="COMMENT" />
+    <NavigationProperty Name="FORUM_USERS" Relationship="Self.FK__FORUM_POS__Autho__71D1E811" FromRole="FORUM_POSTS" ToRole="FORUM_USERS" />
+    <NavigationProperty Name="POST_IMAGE" Relationship="Self.FK__POST_IMAG__PostI__74AE54BC" FromRole="FORUM_POSTS" ToRole="POST_IMAGE" />
+    <NavigationProperty Name="REPORTED_POSTS" Relationship="Self.FK__REPORTED___PostI__7D439ABD" FromRole="FORUM_POSTS" ToRole="REPORTED_POSTS" />
+  </EntityType>
+  <EntityType Name="FORUM_USERS">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="EmailAddress" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ProfilePicPath" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="UserPassword" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModifiedAt" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="COMMENTs" Relationship="Self.FK__COMMENT__AuthorI__778AC167" FromRole="FORUM_USERS" ToRole="COMMENT" />
+    <NavigationProperty Name="FORUM_POSTS" Relationship="Self.FK__FORUM_POS__Autho__71D1E811" FromRole="FORUM_USERS" ToRole="FORUM_POSTS" />
+    <NavigationProperty Name="REPORTED_POSTS" Relationship="Self.FK__REPORTED___Repor__7E37BEF6" FromRole="FORUM_USERS" ToRole="REPORTED_POSTS" />
+  </EntityType>
+  <EntityType Name="POST_IMAGE">
+    <Key>
+      <PropertyRef Name="ImageID" />
+    </Key>
+    <Property Name="ImageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AltText" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="ImagePath" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="PostID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="FORUM_POSTS" Relationship="Self.FK__POST_IMAG__PostI__74AE54BC" FromRole="POST_IMAGE" ToRole="FORUM_POSTS" />
+  </EntityType>
+  <EntityType Name="REPORTED_POSTS">
+    <Key>
+      <PropertyRef Name="ReportID" />
+    </Key>
+    <Property Name="ReportID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PostID" Type="Int32" Nullable="false" />
+    <Property Name="ReporterID" Type="Int32" Nullable="false" />
+    <Property Name="Reason" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ReportedAt" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsResolved" Type="Boolean" Nullable="false" />
+    <Property Name="ResolvedAt" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="FORUM_POSTS" Relationship="Self.FK__REPORTED___PostI__7D439ABD" FromRole="REPORTED_POSTS" ToRole="FORUM_POSTS" />
+    <NavigationProperty Name="FORUM_USERS" Relationship="Self.FK__REPORTED___Repor__7E37BEF6" FromRole="REPORTED_POSTS" ToRole="FORUM_USERS" />
+  </EntityType>
+  <Association Name="FK__COMMENT__AuthorI__778AC167">
+    <End Role="FORUM_USERS" Type="Self.FORUM_USERS" Multiplicity="1" />
+    <End Role="COMMENT" Type="Self.COMMENT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FORUM_USERS">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="COMMENT">
+        <PropertyRef Name="AuthorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__COMMENT__PostID__787EE5A0">
+    <End Role="FORUM_POSTS" Type="Self.FORUM_POSTS" Multiplicity="1" />
+    <End Role="COMMENT" Type="Self.COMMENT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FORUM_POSTS">
+        <PropertyRef Name="PostID" />
+      </Principal>
+      <Dependent Role="COMMENT">
+        <PropertyRef Name="PostID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__FORUM_POS__Autho__71D1E811">
+    <End Role="FORUM_USERS" Type="Self.FORUM_USERS" Multiplicity="1" />
+    <End Role="FORUM_POSTS" Type="Self.FORUM_POSTS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FORUM_USERS">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="FORUM_POSTS">
+        <PropertyRef Name="AuthorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__POST_IMAG__PostI__74AE54BC">
+    <End Role="FORUM_POSTS" Type="Self.FORUM_POSTS" Multiplicity="1" />
+    <End Role="POST_IMAGE" Type="Self.POST_IMAGE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FORUM_POSTS">
+        <PropertyRef Name="PostID" />
+      </Principal>
+      <Dependent Role="POST_IMAGE">
+        <PropertyRef Name="PostID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__REPORTED___PostI__7D439ABD">
+    <End Role="FORUM_POSTS" Type="Self.FORUM_POSTS" Multiplicity="1" />
+    <End Role="REPORTED_POSTS" Type="Self.REPORTED_POSTS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FORUM_POSTS">
+        <PropertyRef Name="PostID" />
+      </Principal>
+      <Dependent Role="REPORTED_POSTS">
+        <PropertyRef Name="PostID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__REPORTED___Repor__7E37BEF6">
+    <End Role="FORUM_USERS" Type="Self.FORUM_USERS" Multiplicity="1" />
+    <End Role="REPORTED_POSTS" Type="Self.REPORTED_POSTS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FORUM_USERS">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="REPORTED_POSTS">
+        <PropertyRef Name="ReporterID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ForumsUnknown" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="COMMENTs" EntityType="Self.COMMENT" />
+    <EntitySet Name="FORUM_POSTS" EntityType="Self.FORUM_POSTS" />
+    <EntitySet Name="FORUM_USERS" EntityType="Self.FORUM_USERS" />
+    <EntitySet Name="POST_IMAGE" EntityType="Self.POST_IMAGE" />
+    <EntitySet Name="REPORTED_POSTS" EntityType="Self.REPORTED_POSTS" />
+    <AssociationSet Name="FK__COMMENT__AuthorI__778AC167" Association="Self.FK__COMMENT__AuthorI__778AC167">
+      <End Role="FORUM_USERS" EntitySet="FORUM_USERS" />
+      <End Role="COMMENT" EntitySet="COMMENTs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__COMMENT__PostID__787EE5A0" Association="Self.FK__COMMENT__PostID__787EE5A0">
+      <End Role="FORUM_POSTS" EntitySet="FORUM_POSTS" />
+      <End Role="COMMENT" EntitySet="COMMENTs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__FORUM_POS__Autho__71D1E811" Association="Self.FK__FORUM_POS__Autho__71D1E811">
+      <End Role="FORUM_USERS" EntitySet="FORUM_USERS" />
+      <End Role="FORUM_POSTS" EntitySet="FORUM_POSTS" />
+    </AssociationSet>
+    <AssociationSet Name="FK__POST_IMAG__PostI__74AE54BC" Association="Self.FK__POST_IMAG__PostI__74AE54BC">
+      <End Role="FORUM_POSTS" EntitySet="FORUM_POSTS" />
+      <End Role="POST_IMAGE" EntitySet="POST_IMAGE" />
+    </AssociationSet>
+    <AssociationSet Name="FK__REPORTED___PostI__7D439ABD" Association="Self.FK__REPORTED___PostI__7D439ABD">
+      <End Role="FORUM_POSTS" EntitySet="FORUM_POSTS" />
+      <End Role="REPORTED_POSTS" EntitySet="REPORTED_POSTS" />
+    </AssociationSet>
+    <AssociationSet Name="FK__REPORTED___Repor__7E37BEF6" Association="Self.FK__REPORTED___Repor__7E37BEF6">
+      <End Role="FORUM_USERS" EntitySet="FORUM_USERS" />
+      <End Role="REPORTED_POSTS" EntitySet="REPORTED_POSTS" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

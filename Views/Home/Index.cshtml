@@ -76,7 +76,7 @@
                             <div class="card-subtitle h5">
                                 @if (item.ProfilePicPath != null)
                                 {
-                                    <img src="@item.ProfilePicPath" class="rounded-circle border border-3 border-light" height="30"/>
+                                    <img src="@item.ProfilePicPath" class="rounded-circle border border-3 border-light" style="height: 30px;width:30px;overflow:hidden;object-fit:cover;"/>
                                 }<span class="text-danger">@item.AuthorName</span>
                             </div><br />
                             <div class="card-title display-6 fw-normal">@item.Title</div>
@@ -111,27 +111,30 @@
                                         </div>
                                     }
 
-                                    <div class="carousel-inner">
-                                        @{
-                                            int count = 0;
-                                        }
-                                        @foreach (var image in item.Images)
+                                <div class="carousel-inner">
+
+                                    @{
+                                        int count = 0;
+                                    }
+                                    @foreach (var image in item.Images)
+                                    {
+                                        if (count == 0)
                                         {
-                                            if (count == 0)
-                                            {
-                                                <div class="carousel-item active">
-                                                        <img src="@image.ImagePath" class="d-block w-100 img-fluid" alt="@image.AltText">
-                                                </div>
-                                            }
-                                            else
-                                            {
-                                                <div class="carousel-item">
-                                                    <img src="@image.ImagePath" class="d-block w-100 img-fluid" alt="@image.AltText">
-                                                </div>
-                                            }
-                                            count++;
+                                            <div class="carousel-item active">
+                                                <img src="@image.ImagePath" class="d-block w-75 img-fluid rounded mx-auto" alt="@image.AltText">
+                                            </div>
                                         }
-                                    </div>
+                                        else
+                                        {
+                                            <div class="carousel-item">
+                                                <img src="@image.ImagePath" class="d-block w-75 img-fluid rounded mx-auto" alt="@image.AltText">
+                                            </div>
+                                        }
+                                        count++;
+                                    }
+
+
+                                </div>
                                 </div>
                             }
                         <br />
