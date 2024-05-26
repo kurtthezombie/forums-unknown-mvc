@@ -73,7 +73,7 @@
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     <div class="card bg-transparent col-md-6">
                         <div class="card-body p-0">
-                            @Html.TextAreaFor(model => model.Comment.Content, htmlAttributes: new { @class = "form-control-sm bg-transparent text-white w-100 border-0 border-bottom rounded-0 pl-5 pb-0", placeholder = "Add a comment..." })
+                            @Html.TextAreaFor(model => model.Comment.Content, htmlAttributes: new { @class = "form-control-sm bg-transparent text-white w-100 border-0 border-bottom rounded-0 pl-5 pb-0", placeholder = "Add a comment...", id = "commentBox" })
                             @Html.ValidationMessageFor(model => model.Comment.Content, "", new { @class = "text-danger" })
                             <br />
                             <div class="form-group d-flex justify-content-end">
@@ -104,6 +104,9 @@
                                 </a>
                                 <h6 class="mt-3">@comment.Content</h6>
                                 <p class="mb-0 text-secondary created-at" data-created-at="@commentCreatedAt">@comment.CreatedAt</p>
+                                <div class="d-flex justify-content-start mt-2">
+                                    <button type="button" class="btn btn-sm btn-outline-light reply-btn" data-username="@comment.AuthorName">Reply</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -114,4 +117,23 @@
         
     </div>
 </div>
+<script>
+    const replyButtons = document.querySelectorAll('.reply-btn');
 
+    replyButtons.forEach(button => {
+        button.addEventListener('click', (event) => {
+            event.preventDefault();
+            const username = button.dataset.username;
+            const commentBox = document.getElementById('commentBox');
+            commentBox.value = `@@${username} `;
+            commentBox.focus();
+
+            const commentForm = commentBox.closest('form');
+
+            const commentFormTop = commentForm.offsetTop;
+
+            window.scrollTo({ top: commentFormTop, behavior: 'smooth' });
+            
+        });
+    });
+</script>
