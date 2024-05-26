@@ -58,5 +58,20 @@ namespace ForumsUnknown.Controllers
 
             return View();
         }
+
+        #region footer
+
+        public ActionResult TermsAndConditions()
+        {
+            return View();
+        }
+        
+        public ActionResult PrivacyPolicy()
+        {
+            return View();
+        }
+
+        #endregion
+
     }
 }
