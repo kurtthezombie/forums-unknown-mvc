@@ -30,5 +30,6 @@ namespace ForumsUnknown.Models
         public virtual DbSet<FORUM_USERS> FORUM_USERS { get; set; }
         public virtual DbSet<POST_IMAGE> POST_IMAGE { get; set; }
         public virtual DbSet<REPORTED_POSTS> REPORTED_POSTS { get; set; }
+        public virtual DbSet<FEEDBACK> FEEDBACK { get; set; }
     }
 }

@@ -16,6 +16,8 @@
         <AssociationConnector Association="ForumsUnknownModel.FK__POST_IMAG__PostI__74AE54BC" ManuallyRouted="false" />
         <AssociationConnector Association="ForumsUnknownModel.FK__REPORTED___PostI__7D439ABD" ManuallyRouted="false" />
         <AssociationConnector Association="ForumsUnknownModel.FK__REPORTED___Repor__7E37BEF6" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ForumsUnknownModel.FEEDBACK" Width="1.5" PointX="3" PointY="3.75" />
+        <AssociationConnector Association="ForumsUnknownModel.FK__FEEDBACK__UserID__02FC7413" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

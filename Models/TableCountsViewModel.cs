@@ -9,5 +9,6 @@ namespace ForumsUnknown.Models
     {
         public int UserCount { get; set; }
         public int PostCount { get; set;}
+        public int FeedbackCount { get; set; }  
     }
 }

@@ -1,0 +1,52 @@
+﻿@model IEnumerable<ForumsUnknown.Models.FEEDBACK>
+
+@{
+    ViewBag.Title = "Feedbacks";
+}
+
+<h2>Feedbacks</h2>
+<h5 class="text-danger">@ViewBag.FBError</h5>
+@Html.ActionLink("GO BACK", "AdminPage", "Admin", null, htmlAttributes: new { @class = "btn btn-secondary" })
+<br /><br />
+<form asp-action="Feedbacks" method="get" class="form-inline my-2 my-lg-0">
+    <div class="form-group d-flex col-md-5">
+        <input class="form-control w-50 bg-transparent border-0 border-bottom border-1 border-light rounded-0 text-light" type="search" placeholder="Search by content" aria-label="Search" name="searchString" value="@ViewBag.CurrentFilter">
+        <button class="btn btn-primary mx-2" type="submit">Search</button>
+    </div>
+</form>
+
+<table class="table text-light">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.UserID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Content)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedAt)
+        </th>
+        <th>
+            Actions
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Content)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedAt)
+            </td>
+            <td>
+                @Html.ActionLink("Delete", "DeleteFeedback", "Admin", new { id = item.FeedbackID }, htmlAttributes: new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+    }
+
+</table>

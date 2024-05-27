@@ -25,6 +25,7 @@ namespace ForumsUnknown.Models
         public int PostID { get; set; }
 
         public System.DateTime CreatedAt { get; set; }
+
         public Nullable<System.DateTime> ModifiedAt { get; set; }
     
         public virtual FORUM_USERS FORUM_USERS { get; set; }

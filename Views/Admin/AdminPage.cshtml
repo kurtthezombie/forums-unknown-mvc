@@ -14,6 +14,9 @@
         <div class="bg-dark mx-3 p-3 post btn btn-dark">
             <h4 class="display-4">Posts: <span class="text-danger">@Model.PostCount</span></h4>
         </div>
+        <div class="bg-dark mx-3 p-3 feedback btn btn-dark">
+            <h4 class="display-4">Feedbacks: <span class="text-danger">@Model.FeedbackCount</span></h4>
+        </div>
     </div><br />
 
     @*@Html.ActionLink("USERS", "Users", "Admin", new { @class = "btn btn-outline-light" })
@@ -23,7 +26,8 @@
     document.addEventListener("DOMContentLoaded", function () {
         //var cards = document.querySelectorAll(".card");
         var user = document.querySelector(".user");
-        var post = document.querySelector(".post")
+        var post = document.querySelector(".post");
+        var feedback = document.querySelector(".feedback");
 
         user.addEventListener("click", function () {
             window.location.href = '/Admin/Users';
@@ -32,6 +36,10 @@
         post.addEventListener("click", function () {
             window.location.href = '/Admin/Posts';
         });
+
+        feedback.addEventListener("click", function () {
+            window.location.href = '/Admin/Feedbacks';
+        })
     });
 </script>
 

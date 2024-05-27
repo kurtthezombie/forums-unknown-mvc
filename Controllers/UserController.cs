@@ -11,6 +11,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using System.Web.Services.Description;
 using System.Web.SessionState;
 
 namespace ForumsUnknown.Controllers
@@ -224,6 +225,8 @@ namespace ForumsUnknown.Controllers
             //retrieve user
             var user = db.FORUM_USERS.Find(userId);
 
+            
+
             //retrieve posts
             var posts = db.FORUM_POSTS.Where(p => p.AuthorID == userId).ToList();
             
@@ -232,7 +235,10 @@ namespace ForumsUnknown.Controllers
             {
                 db.COMMENT.Where(c => c.PostID == post.PostID).ForEach(c => db.COMMENT.Remove(c));
             }
-            
+
+            //delete feedbacks made by author
+            db.FEEDBACK.Where(fb => fb.UserID == userId).ForEach(fb => db.FEEDBACK.Remove(fb));
+
             //delete comments made by author
             db.COMMENT.Where(c => c.AuthorID == userId).ForEach(c => db.COMMENT.Remove(c));
 

@@ -59,6 +59,38 @@ namespace ForumsUnknown.Controllers
             return View();
         }
 
+        [Authorize]
+        [Route("Feedback")]
+        [HttpGet]
+        public ActionResult Feedback()
+        {
+            return View();
+        }
+
+        [Authorize]
+        [Route("Feedback")]
+        [HttpPost]
+        public ActionResult Feedback(FEEDBACK feedback)
+        {
+            if (ModelState.IsValid)
+            {
+                //set createdtime to now
+                feedback.CreatedAt = DateTime.Now;
+                db.FEEDBACK.Add(feedback);
+                db.SaveChanges();
+                //display messages
+                ViewBag.Notification = "Feedback sent.";
+                ViewBag.NotificationColor = "text-success";
+                //clear textfields
+                ModelState.Clear();
+                return View(new FEEDBACK());
+            }
+            else
+            {
+                return View(feedback);
+            }
+        }
+
         #region footer
 
         public ActionResult TermsAndConditions()

@@ -24,9 +24,10 @@ namespace ForumsUnknown.Models
             this.COMMENTs = new HashSet<COMMENT>();
             this.FORUM_POSTS = new HashSet<FORUM_POSTS>();
             this.REPORTED_POSTS = new HashSet<REPORTED_POSTS>();
+            this.FEEDBACKs = new HashSet<FEEDBACK>();
         }
-        [DisplayName("ID")]    
-        
+
+        [DisplayName("ID")]
         public int UserID { get; set; }
 
         [Required]
@@ -40,7 +41,7 @@ namespace ForumsUnknown.Models
 
         [DisplayName("Profile Picture")]
         public string ProfilePicPath { get; set; }
-
+        
         [NotMapped]
         public HttpPostedFileBase ImageFile { get; set; }
 
@@ -48,13 +49,14 @@ namespace ForumsUnknown.Models
         [DisplayName("Password")]
         [DataType(DataType.Password)]
         public string UserPassword { get; set; }
-        
+
         [Required]
         [DisplayName("Confirm Password")]
         [Compare("UserPassword", ErrorMessage = "Passwords do not match.")]
         [DataType(DataType.Password)]
         [NotMapped]
         public string ConfirmPassword { get; set; }
+
         [DisplayName("Created On")]
         public System.DateTime CreatedAt { get; set; }
         public Nullable<System.DateTime> ModifiedAt { get; set; }
@@ -65,5 +67,7 @@ namespace ForumsUnknown.Models
         public virtual ICollection<FORUM_POSTS> FORUM_POSTS { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<REPORTED_POSTS> REPORTED_POSTS { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FEEDBACK> FEEDBACKs { get; set; }
     }
 }

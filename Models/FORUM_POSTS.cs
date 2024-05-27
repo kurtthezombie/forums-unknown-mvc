@@ -40,7 +40,7 @@ namespace ForumsUnknown.Models
         public System.DateTime CreatedAt { get; set; }
 
         public Nullable<System.DateTime> ModifiedAt { get; set; }
-        
+
         [Required]
         public int AuthorID { get; set; }
     

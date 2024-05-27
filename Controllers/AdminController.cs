@@ -27,6 +27,7 @@ namespace ForumsUnknown.Controllers
 
                     tableCounts.UserCount = db.FORUM_USERS.Count();
                     tableCounts.PostCount = db.FORUM_POSTS.Count();
+                    tableCounts.FeedbackCount = db.FEEDBACK.Count();
 
                     return View(tableCounts);
                 } 
@@ -341,6 +342,47 @@ namespace ForumsUnknown.Controllers
         }
         #endregion
 
+        #region Feedback
+
+        [Authorize]
+        public ActionResult Feedbacks(string searchString)
+        {
+            var feedbacks = from f in db.FEEDBACK
+                            select f;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                feedbacks = feedbacks.Where(s => s.Content.Contains(searchString));
+            }
+
+            // Order by CreatedAt in descending order
+            feedbacks = feedbacks.OrderByDescending(s => s.CreatedAt);
+
+            ViewBag.CurrentFilter = searchString;
+            return View(feedbacks.ToList());
+        }
+
+        public ActionResult DeleteFeedback(int id)
+        {
+            var feedback = db.FEEDBACK.Find(id);
+            
+            if (feedback != null)
+            {
+                //remove 
+                db.FEEDBACK.Remove(feedback);
+                //save db changes
+                db.SaveChanges();
+                //go back to the view / reload the page
+                return RedirectToAction("Feedbacks", "Admin");
+            }
+            else
+            {
+                ViewBag.FBError = "There was an error with deleting the feedback (feedback missing..)";
+                return RedirectToAction("Feedbacks");
+            }
+        }
+
+        #endregion
     }
 
 }
