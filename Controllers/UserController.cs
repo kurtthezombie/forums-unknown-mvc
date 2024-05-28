@@ -170,10 +170,7 @@ namespace ForumsUnknown.Controllers
         public ActionResult UserProfile()
         {
             int id = (int)Session["UserId"];
-            //if (id != SessionId)
-            //{
-            //    return RedirectToAction("Index", "Home", null);
-            //}
+
             if (Session["Username"] != null )
             {
                 FORUM_USERS user = db.FORUM_USERS.Find(id);

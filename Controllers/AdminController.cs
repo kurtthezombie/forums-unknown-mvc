@@ -151,27 +151,6 @@ namespace ForumsUnknown.Controllers
 
         public ActionResult DeleteUser(int id)
         {
-            //var data = db.FORUM_USERS.Find(id);
-
-            //if (data == null)
-            //{
-            //    return HttpNotFound();
-            //}
-            //else
-            //{
-            //    //delete comments first
-            //    var comments = db.COMMENT.Where(x => x.AuthorID == id);
-            //    db.COMMENT.RemoveRange(comments);
-
-            //    //delete posts of user before deleting user
-            //    var posts = db.FORUM_POSTS.Where(x => x.AuthorID == id);
-            //    db.FORUM_POSTS.RemoveRange(posts);
-
-
-            //    //remove the user
-            //    db.FORUM_USERS.Remove(data);
-            //    db.SaveChanges();
-            //}
             var userController = new UserController();
             userController.Delete(id);
 

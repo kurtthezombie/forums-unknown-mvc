@@ -7,7 +7,10 @@
 <h2>Feedbacks</h2>
 <h5 class="text-danger">@ViewBag.FBError</h5>
 @Html.ActionLink("GO BACK", "AdminPage", "Admin", null, htmlAttributes: new { @class = "btn btn-secondary" })
-<br /><br />
+@Html.ActionLink("USERS", "Users", "Admin", null, htmlAttributes: new { @class = "btn btn-outline-light" })
+@Html.ActionLink("POSTS", "Posts", "Admin", null, htmlAttributes: new { @class = "btn btn-outline-light" })
+<br />
+<br />
 <form asp-action="Feedbacks" method="get" class="form-inline my-2 my-lg-0">
     <div class="form-group d-flex col-md-5">
         <input class="form-control w-50 bg-transparent border-0 border-bottom border-1 border-light rounded-0 text-light" type="search" placeholder="Search by content" aria-label="Search" name="searchString" value="@ViewBag.CurrentFilter">
