@@ -12,7 +12,7 @@ using System.Web.Mvc;
 
 namespace ForumsUnknown.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         private FuDBContext db = new FuDBContext();
 

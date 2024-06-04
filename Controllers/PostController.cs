@@ -10,7 +10,7 @@ using System.Web.UI;
 namespace ForumsUnknown.Controllers
 {
     [Authorize]
-    public class PostController : Controller
+    public class PostController : BaseController
     {
         FuDBContext db = new FuDBContext();
 

@@ -16,7 +16,7 @@ using System.Web.SessionState;
 
 namespace ForumsUnknown.Controllers
 {
-    public class UserController : Controller
+    public class UserController : BaseController
     {
         private FuDBContext db = new FuDBContext();
 
@@ -78,8 +78,27 @@ namespace ForumsUnknown.Controllers
 
         public ActionResult Logout()
         {
+            //clear session
             Session.Clear();
+            Session.Abandon();
+
+            //invalidate auth cookie
             FormsAuthentication.SignOut();
+
+            //clear cache
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            Response.Cache.SetExpires(DateTime.UtcNow.AddMinutes(-1));
+            Response.Cache.SetNoStore();
+
+            //expire auth cookie
+            var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, "")
+            {
+                Expires = DateTime.Now.AddYears(-1),
+                HttpOnly = true
+            };
+            Response.Cookies.Add(cookie);
+
+            //return to page
             return RedirectToAction("Login", "User");
         }
 
